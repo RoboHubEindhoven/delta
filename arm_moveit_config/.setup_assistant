@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: arm_description
+    relative_path: urdf/delta_urdf_v2.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/delta_urdf_v2.srdf
+  CONFIG:
+    author_name: RoboHub Eindhoven
+    author_email: info@robohub-eindhoven.nl
+    generated_timestamp: 1574074767
