@@ -21,18 +21,18 @@ class Sender():
                 print("Unable to connect/nTrying to connect...")
 
         if self.c.is_open():
-            xh = (xu >> 16)
-            xl = (xu & 0x0000FFFF)
-            yh = (yu >> 16)
-            yl = (yu & 0x0000FFFF)
-            zh = (zu >> 16)
-            zl = (zu & 0x0000FFFF)
-            rxh = (rxu >> 16)
-            rxl = (rxu & 0x0000FFFF)
-            ryh = (ryu >> 16)
-            ryl = (ryu & 0x0000FFFF)
-            rzh = (rzu >> 16)
-            rzl = (rzu & 0x0000FFFF)
+            xh = xu >> 16
+            xl = xu & 0x0000FFFF
+            yh = yu >> 16
+            yl = yu & 0x0000FFFF
+            zh = zu >> 16
+            zl = zu & 0x0000FFFF
+            rxh = rxu >> 16
+            rxl = rxu & 0x0000FFFF
+            ryh = ryu >> 16
+            ryl = ryu & 0x0000FFFF
+            rzh = rzu >> 16
+            rzl = rzu & 0x0000FFFF
             self.c.write_single_register(0x0330, xl)
             self.c.write_single_register(0x0331, xh)
             self.c.write_single_register(0x0332, yl)
@@ -47,19 +47,32 @@ class Sender():
             self.c.write_single_register(0x033B, rzh)
             self.c.write_single_register(0x033E, 0)
             self.c.write_single_register(0x0324, speed)
-            self.c.write_single_register(0x300, 302)
+            self.c.write_single_register(0x300, 301)
+            self.waitForEndMove()
+
+    def goHome(self):
+        if not self.c.is_open():
+            if not self.c.open():
+                print("Unable to connect/nTrying to connect...")
+
+        if self.c.is_open():
+            self.c.write_single_register(0x0300, 1405)
             self.waitForEndMove()
 
     def waitForEndMove(self):
         time.sleep(1)
         while self.c.read_holding_registers(0x00E0, 1)[0] == 1:
-            print("Robot is moving to position")
+            #print("Robot is moving to position")
             pass
 
 if __name__ == "__main__":
     s = Sender()
     while True:
-        s.sendMove(534, 0, 854, 0, 0, -180, 50, 'world')
-        print("Move 1")
-        s.sendMove(450, 0, 854, 0, 0, -180, 50, 'world')
-        print("Move 2")
+        s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
+        time.sleep(1)
+        s.sendMove(150, 0, 800, 180, 0, 90, 100, 'world')
+        time.sleep(1)
+        s.sendMove(400, -150, 850, 180, 0, 0, 100, 'world')
+        time.sleep(1)
+        s.goHome()
+        time.sleep(1)
