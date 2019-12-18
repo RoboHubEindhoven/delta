@@ -80,7 +80,11 @@ class Sender():
 if __name__ == "__main__":
     s = Sender()
     while True:
+        s.writeDigitalOutput(1, True)
         s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
         s.sendMove(150, 0, 800, 180, 0, 90, 100, 'world')
+        s.writeDigitalOutput(6, True)
         s.sendMove(400, -150, 900, 180, 0, 0, 100, 'world')
         s.goHome()
+        s.writeDigitalOutput(6, False)
+        s.writeDigitalOutput(1, False)
