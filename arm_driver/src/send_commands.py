@@ -6,7 +6,8 @@ import time
 class Sender():
     def __init__(self):
         self.c = ModbusClient(host="192.168.1.1", auto_open=True, auto_close=False, port=502, debug=False, unit_id=2)
-        
+        self.bits = 0
+
     def sendMove(self, x, y, z, rx, ry, rz, speed, frame):
         xu = int(x * 1000)
         yu = int(y * 1000)
@@ -59,20 +60,35 @@ class Sender():
             self.c.write_single_register(0x0300, 1405)
             self.waitForEndMove()
 
+    def writeDigitalOutput(self, output, state):
+        if state == True:
+            self.bits = self.bits | (1 << output-1)
+        elif state == False:
+            self.bits = self.bits & (0 << output-1)
+
+        self.b = format(self.bits, 'b').zfill(16)
+        print(self.b)
+        self.c.write_single_register(0x02FE, int(self.b, 2))
+
     def waitForEndMove(self):
         time.sleep(1)
         while self.c.read_holding_registers(0x00E0, 1)[0] == 1:
             #print("Robot is moving to position")
             pass
+        time.sleep(1)
 
 if __name__ == "__main__":
     s = Sender()
-    while True:
-        s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
-        time.sleep(1)
-        s.sendMove(150, 0, 800, 180, 0, 90, 100, 'world')
-        time.sleep(1)
-        s.sendMove(400, -150, 850, 180, 0, 0, 100, 'world')
-        time.sleep(1)
-        s.goHome()
-        time.sleep(1)
+    s.writeDigitalOutput(1, True)
+    s.writeDigitalOutput(4, True)
+    time.sleep(5)
+    s.writeDigitalOutput(1, False)
+    s.writeDigitalOutput(4, False)
+    #s.writeDigitalOutput(8, True)
+    #s.writeDigitalOutput(1, False)
+    #s.writeDigitalOutput(8, False)
+    # while True:
+    #     s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
+    #     s.sendMove(150, 0, 800, 180, 0, 90, 100, 'world')
+    #     s.sendMove(400, -150, 900, 180, 0, 0, 100, 'world')
+    #     s.goHome()
