@@ -79,16 +79,8 @@ class Sender():
 
 if __name__ == "__main__":
     s = Sender()
-    s.writeDigitalOutput(1, True)
-    s.writeDigitalOutput(4, True)
-    time.sleep(5)
-    s.writeDigitalOutput(1, False)
-    s.writeDigitalOutput(4, False)
-    #s.writeDigitalOutput(8, True)
-    #s.writeDigitalOutput(1, False)
-    #s.writeDigitalOutput(8, False)
-    # while True:
-    #     s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
-    #     s.sendMove(150, 0, 800, 180, 0, 90, 100, 'world')
-    #     s.sendMove(400, -150, 900, 180, 0, 0, 100, 'world')
-    #     s.goHome()
+    while True:
+        s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
+        s.sendMove(150, 0, 800, 180, 0, 90, 100, 'world')
+        s.sendMove(400, -150, 900, 180, 0, 0, 100, 'world')
+        s.goHome()
