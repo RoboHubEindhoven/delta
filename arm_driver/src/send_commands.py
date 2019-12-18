@@ -85,6 +85,6 @@ if __name__ == "__main__":
         s.sendMove(150, 0, 800, 180, 0, 90, 100, 'world')
         s.writeDigitalOutput(6, True)
         s.sendMove(400, -150, 900, 180, 0, 0, 100, 'world')
+        s.writeDigitalOutput(1, False)
         s.goHome()
         s.writeDigitalOutput(6, False)
-        s.writeDigitalOutput(1, False)
