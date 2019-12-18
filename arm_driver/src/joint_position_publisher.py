@@ -10,7 +10,6 @@ from pyModbusTCP.client import ModbusClient
 
 class JointStatePublisher():
     def __init__(self):
-            # Create Modbus client
             self.c = ModbusClient(host="192.168.1.1", auto_open=True, auto_close=False, port=502, debug=False, unit_id=2)
 
             rospy.init_node("joint_pos_pub")
@@ -57,10 +56,9 @@ class JointStatePublisher():
             j6_a = struct.unpack('i', struct.pack('HH', j6[0], j6[1]))[0]
             self.j6_angle = radians(j6_a/1000)
 
-            self.joint_states.position = [self.j1_angle, -self.j2_angle, self.j3_angle, -self.j4_angle, self.j5_angle, -self.j6_angle]
+            self.joint_states.position = [self.j1_angle, -self.j2_angle, self.j3_angle, -self.j4_angle, -self.j5_angle, -self.j6_angle]
             self.joint_states.header.stamp = rospy.Time.now()
             self.p.publish(self.joint_states)
-            print(self.j1_angle, self.j2_angle, self.j3_angle, self.j4_angle, self.j5_angle, self.j6_angle)
 
 def scale(x, in_dim, out_dim):
     return (x - in_dim[0]) * (out_dim[1] - out_dim[0]) / (in_dim[1] - in_dim[0]) + out_dim[0]
