@@ -8,14 +8,38 @@ class Sender():
         self.c = ModbusClient(host="192.168.1.1", auto_open=True, auto_close=False, port=502, debug=False, unit_id=2)
         self.bits = 0
 
+    def enableRobot(self):
+        if not self.c.is_open():
+            if not self.c.open():
+                print("Unable to connect/nTrying to connect...")
+
+        if self.c.is_open():
+            self.c.write_single_register(0x0006, 0x101)
+            self.c.write_single_register(0x0007, 0x101)
+            self.c.write_single_register(0x0000, 0x101)
+            print("Enabling robot...")
+            time.sleep(3)
+
+    def disableRobot(self):
+        if not self.c.is_open():
+            if not self.c.open():
+                print("Unable to connect/nTrying to connect...")
+
+        if self.c.is_open():
+            self.c.write_single_register(0x0006, 0x000)
+            self.c.write_single_register(0x0007, 0x000)
+            self.c.write_single_register(0x0000, 0x000)
+            time.sleep(3)
+            print("Robot is disabled")
+
     def sendMove(self, x, y, z, rx, ry, rz, speed, frame):
-        xu = int(x * 1000)
-        yu = int(y * 1000)
-        zu = int(z * 1000)
-        rxu = int(rx * 1000)
-        ryu = int(ry * 1000)
-        rzu = int(rz * 1000)
-        print(xu, yu, zu, rxu, ryu, rzu, speed)
+        xu = twos_comp(x*1000, 32) 
+        yu = twos_comp(y*1000, 32)
+        zu = twos_comp(z*1000, 32)
+        rxu = twos_comp(rx*1000, 32)
+        ryu = twos_comp(ry*1000, 32)
+        rzu = twos_comp(rz*1000, 32)
+        print("Moving to position: x=%s, y=%s, z=%s, rx=%s, ry=%s, rz=%s" % (x,y,z,rx,ry,rz))
 
         if not self.c.is_open():
             if not self.c.open():
@@ -58,6 +82,7 @@ class Sender():
 
         if self.c.is_open():
             self.c.write_single_register(0x0300, 1405)
+            print("Arm is homing...")
             self.waitForEndMove()
 
     def writeDigitalOutput(self, output, state):
@@ -71,20 +96,33 @@ class Sender():
         self.c.write_single_register(0x02FE, int(self.b, 2))
 
     def waitForEndMove(self):
-        time.sleep(1)
+        time.sleep(1.5)
         while self.c.read_holding_registers(0x00E0, 1)[0] == 1:
-            #print("Robot is moving to position")
             pass
-        time.sleep(1)
+        time.sleep(1.5)
+
+def twos_comp(val, bits):
+    """compute the 2's complement of int value val"""
+    if (val & (1 << (bits - 1))) != 0: # if sign bit is set e.g., 8bit: 128-255
+        val = val - (1 << bits)        # compute negative value
+    return val                         # return positive value as is
 
 if __name__ == "__main__":
     s = Sender()
-    while True:
-        s.writeDigitalOutput(1, True)
-        s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
-        s.sendMove(150, 0, 800, 180, 0, 90, 100, 'world')
-        s.writeDigitalOutput(6, True)
-        s.sendMove(400, -150, 900, 180, 0, 0, 100, 'world')
-        s.writeDigitalOutput(1, False)
-        s.goHome()
-        s.writeDigitalOutput(6, False)
+    s.enableRobot()
+    s.goHome()
+    s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
+    s.sendMove(400, 0, 600, 180, 0, 0, 100, 'world')
+    s.sendMove(400, -150, 600, 180, 0, 0, 100, 'world')
+    s.disableRobot()
+
+
+    #while True:
+        #s.writeDigitalOutput(1, True)
+        #s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
+        #s.sendMove(150, 0, 800, 180, 0, 90, 100, 'world')
+        #s.writeDigitalOutput(6, True)
+        #s.sendMove(400, -150, 900, 180, 0, 0, 100, 'world')
+        #s.writeDigitalOutput(1, False)
+        #s.goHome()
+        #s.writeDigitalOutput(6, False)
