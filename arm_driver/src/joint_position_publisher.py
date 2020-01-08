@@ -15,7 +15,7 @@ class JointStatePublisher():
             rospy.init_node("joint_pos_pub")
             self.p = rospy.Publisher('/joint_states', JointState, queue_size=1)
             
-            f = open('/home/remco/catkin_ws/src/delta/arm_driver/yaml/joint_limits.yaml', 'r')
+            f = open('/home/delta/catkin_ws/src/delta/arm_driver/yaml/joint_limits.yaml', 'r')
             d = yaml.load(f)
             f.close()
 
@@ -58,6 +58,7 @@ class JointStatePublisher():
             self.joint_states.position = [self.j1_angle, -self.j2_angle, self.j3_angle, -self.j4_angle, -self.j5_angle, -self.j6_angle]
             self.joint_states.header.stamp = rospy.Time.now()
             self.p.publish(self.joint_states)
+            #print(self.joint_states)
 
 def scale(x, in_dim, out_dim):
     return (x - in_dim[0]) * (out_dim[1] - out_dim[0]) / (in_dim[1] - in_dim[0]) + out_dim[0]
