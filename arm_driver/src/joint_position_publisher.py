@@ -35,7 +35,6 @@ class JointStatePublisher():
             j1_a = struct.unpack('i', struct.pack('HH', j1[0], j1[1]))[0]
             self.j1_angle = radians(j1_a/1000)
 
-
             j2 = self.c.read_holding_registers(0x016A, 2)
             j2_a = struct.unpack('i', struct.pack('HH', j2[0], j2[1]))[0]
             self.j2_angle = radians(j2_a/1000)
