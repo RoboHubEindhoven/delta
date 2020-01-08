@@ -121,6 +121,22 @@ class Sender():
             print(do)
             return do
 
+    def resetUserDigitalOutputs(self):
+        if not self.c.is_open():
+            if not self.c.open():
+                print("Unable to connect\nTrying to connect...")
+
+        if self.c.is_open():
+            self.c.write_single_register(0x02FE, 0)
+
+    def resetErrors(self):
+        if not self.c.is_open():
+            if not self.c.open():
+                print("Unable to connect\nTrying to connect...")
+
+        if self.c.is_open():
+            self.c.write_single_register(0x0180, 0xFFFF)
+
     def waitForEndMove(self):
         time.sleep(1.5)
         while self.c.read_holding_registers(0x00E0, 1)[0] == 1:
@@ -139,6 +155,9 @@ if __name__ == "__main__":
     s.writeDigitalOutput(9, True)    
     s.writeDigitalOutput(11, True)
     s.writeDigitalOutput(1, True)
+    s.getUserDigitalOutputs()
+    time.sleep(3)
+    s.resetUserDigitalOutputs()
     s.getUserDigitalOutputs()
     #s.enableRobot()
     #s.goHome()
