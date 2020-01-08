@@ -11,7 +11,7 @@ class Sender():
     def enableRobot(self):
         if not self.c.is_open():
             if not self.c.open():
-                print("Unable to connect/nTrying to connect...")
+                print("Unable to connect\nTrying to connect...")
 
         if self.c.is_open():
             self.c.write_single_register(0x0006, 0x101)
@@ -23,7 +23,7 @@ class Sender():
     def disableRobot(self):
         if not self.c.is_open():
             if not self.c.open():
-                print("Unable to connect/nTrying to connect...")
+                print("Unable to connect\nTrying to connect...")
 
         if self.c.is_open():
             self.c.write_single_register(0x0006, 0x000)
@@ -43,7 +43,7 @@ class Sender():
 
         if not self.c.is_open():
             if not self.c.open():
-                print("Unable to connect/nTrying to connect...")
+                print("Unable to connect\nTrying to connect...")
 
         if self.c.is_open():
             xh = xu >> 16
@@ -78,7 +78,7 @@ class Sender():
     def goHome(self):
         if not self.c.is_open():
             if not self.c.open():
-                print("Unable to connect/nTrying to connect...")
+                print("Unable to connect\nTrying to connect...")
 
         if self.c.is_open():
             self.c.write_single_register(0x0300, 1405)
@@ -95,6 +95,32 @@ class Sender():
         print(self.b)
         self.c.write_single_register(0x02FE, int(self.b, 2))
 
+    def getUserDigitalInputs(self):
+        if not self.c.is_open():
+            if not self.c.open():
+                print("Unable to connect\nTrying to connect...")
+
+        if self.c.is_open():
+            di = list(map(int, "{0:b}".format(self.c.read_holding_registers(0x02FA, 2)[0])))[::-1]
+            l = 24 - len(di)
+            for _ in range(0, l):
+                di.append(0)
+            print(di)
+            return di
+
+    def getUserDigitalOutputs(self):
+        if not self.c.is_open():
+            if not self.c.open():
+                print("Unable to connect\nTrying to connect...")
+
+        if self.c.is_open():
+            do = list(map(int, "{0:b}".format(self.c.read_holding_registers(0x02FC, 2)[0])))[::-1]
+            l = 12 - len(do)
+            for _ in range(0, l):
+                do.append(0)
+            print(do)
+            return do
+
     def waitForEndMove(self):
         time.sleep(1.5)
         while self.c.read_holding_registers(0x00E0, 1)[0] == 1:
@@ -109,12 +135,17 @@ def twos_comp(val, bits):
 
 if __name__ == "__main__":
     s = Sender()
-    s.enableRobot()
-    s.goHome()
-    s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
-    s.sendMove(400, 0, 600, 180, 0, 0, 100, 'world')
-    s.sendMove(400, -150, 600, 180, 0, 0, 100, 'world')
-    s.disableRobot()
+    s.writeDigitalOutput(5, True)
+    s.writeDigitalOutput(9, True)    
+    s.writeDigitalOutput(11, True)
+    s.writeDigitalOutput(1, True)
+    s.getUserDigitalOutputs()
+    #s.enableRobot()
+    #s.goHome()
+    #s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
+    #s.sendMove(400, 0, 600, 180, 0, 0, 100, 'world')
+    #s.sendMove(400, -150, 600, 180, 0, 0, 100, 'world')
+    #s.disableRobot()
 
 
     #while True:

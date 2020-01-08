@@ -28,7 +28,7 @@ class JointStatePublisher():
     def pubAngles(self):
         if not self.c.is_open():
             if not self.c.open():
-                print("Unable to connect/nTrying to connect...")
+                print("Unable to connect\nTrying to connect...")
 
         if self.c.is_open():
             j1 = self.c.read_holding_registers(0x0168, 2)
