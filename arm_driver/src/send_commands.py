@@ -136,6 +136,8 @@ class Sender():
 
         if self.c.is_open():
             self.c.write_single_register(0x0180, 0xFFFF)
+            time.sleep(0.1)
+            self.c.write_single_register(0x0180, 0x0000)
 
     def waitForEndMove(self):
         time.sleep(1.5)
