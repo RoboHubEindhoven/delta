@@ -153,20 +153,12 @@ def twos_comp(val, bits):
 
 if __name__ == "__main__":
     s = Sender()
-    s.writeDigitalOutput(5, True)
-    s.writeDigitalOutput(9, True)    
-    s.writeDigitalOutput(11, True)
-    s.writeDigitalOutput(1, True)
-    s.getUserDigitalOutputs()
-    time.sleep(3)
-    s.resetUserDigitalOutputs()
-    s.getUserDigitalOutputs()
-    #s.enableRobot()
-    #s.goHome()
-    #s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
-    #s.sendMove(400, 0, 600, 180, 0, 0, 100, 'world')
-    #s.sendMove(400, -150, 600, 180, 0, 0, 100, 'world')
-    #s.disableRobot()
+    s.enableRobot()
+    s.goHome()
+    s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
+    s.sendMove(400, 0, 600, 180, 0, 0, 100, 'world')
+    s.sendMove(400, -150, 600, 180, 0, 0, 100, 'world')
+    s.disableRobot()
 
 
     #while True:
