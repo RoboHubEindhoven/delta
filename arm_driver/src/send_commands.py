@@ -157,7 +157,11 @@ if __name__ == "__main__":
     s.goHome()
     s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
     s.sendMove(400, 0, 600, 180, 0, 0, 100, 'world')
+<<<<<<< HEAD
     s.sendMove(400, -150, 600, 180, 0, 0, 100, 'world')
+=======
+    s.sendMove(100, 200, 900, 180, 0, 0, 100, 'world')
+>>>>>>> c6e5ef2a4b35e9e139da9bcf7599f27849efe895
     s.disableRobot()
 
 
