@@ -4,11 +4,16 @@ from pyModbusTCP.client import ModbusClient
 import time
 
 class Sender():
+    """The "Sender" class contains methods to control the robot.
+    """
     def __init__(self):
         self.c = ModbusClient(host="192.168.1.1", auto_open=True, auto_close=False, port=502, debug=False, unit_id=2)
         self.bits = 0
 
     def enableRobot(self):
+        """This function enables the robot. After this function is called, the robot is ready to move.
+        !!!Be aware the motors get enabled after calling this function!!!
+        """
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
@@ -21,6 +26,8 @@ class Sender():
             time.sleep(3)
 
     def disableRobot(self):
+        """This function disables the robot. After this function is called, the robot can't move. The motors aren't powered anymore.
+        """
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
@@ -33,6 +40,19 @@ class Sender():
             print("Robot is disabled")
 
     def sendMove(self, x, y, z, rx, ry, rz, speed, frame):
+        """This function is used to move the end effector of the robot to a certain position.
+        !!!The robot needs to be enables for this function to work!!!
+        
+        Arguments:
+            x {int} -- [x position in mm]
+            y {int} -- [y position in mm]
+            z {int} -- [z position in mm]
+            rx {int} -- [rotation around x axis in degrees]
+            ry {int} -- [rotation around y axis in degrees]
+            rz {int} -- [rotation around z axis in degrees]
+            speed {int} -- [speed in % [0 to 100]]
+            frame {string} -- [Reference frame (world is base of robot)]
+        """
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
@@ -76,6 +96,9 @@ class Sender():
             self.waitForEndMove()
 
     def goHome(self):
+        """This function moves the robot to the home position that is set in the robot software.
+        !!!The robot needs to be enables for this function to work!!!
+        """
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
@@ -86,6 +109,12 @@ class Sender():
             self.waitForEndMove()
 
     def writeDigitalOutput(self, output, state):
+        """With this function it's possible to control the user digital outputs of the robot.
+        
+        Arguments:
+            output {int} -- [The user digital output number that needs to be used [1 to 12]
+            state {boolean} -- [The state that the output needs to be [True=HIGH (24V), False=LOW (0V)]]
+        """
         if state == True:
             self.bits = self.bits | (1 << output-1)
         elif state == False:
@@ -96,6 +125,11 @@ class Sender():
         self.c.write_single_register(0x02FE, int(self.b, 2))
 
     def getUserDigitalInputs(self):
+        """With this function it's possible to get the states of all user digital inputs.
+        
+        Returns:
+            [list] -- [Containing all states of the digital inputs [0 or 1]]
+        """
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
@@ -109,6 +143,11 @@ class Sender():
             return di
 
     def getUserDigitalOutputs(self):
+        """With this function it's possible to get the states of all user digital outputs.
+        
+        Returns:
+            [list] -- [Containing all states of the digital outputs [0 or 1]]
+        """
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
@@ -122,6 +161,8 @@ class Sender():
             return do
 
     def resetUserDigitalOutputs(self):
+        """With this function it's possible to reset all user digital outputs to 0.
+        """
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
@@ -130,6 +171,9 @@ class Sender():
             self.c.write_single_register(0x02FE, 0)
 
     def resetErrors(self):
+        """With this function it's possible to reset all errors.
+        !!!ONLY USE THIS FUNCTION WHEN YOU'RE IT'S SAFE!!!
+        """
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
@@ -146,7 +190,15 @@ class Sender():
         time.sleep(1.5)
 
 def twos_comp(val, bits):
-    """compute the 2's complement of int value val"""
+    """Returns the 2's complement of a integer. This function takes positive and negative integers.
+    
+    Arguments:
+        val {int} -- [Input integer to take the 2's complement from]
+        bits {int} -- [The amount of bits to calculate the 2's complement from]
+    
+    Returns:
+        [int] -- [2's complement of input integer]
+    """
     if (val & (1 << (bits - 1))) != 0: # if sign bit is set e.g., 8bit: 128-255
         val = val - (1 << bits)        # compute negative value
     return val                         # return positive value as is
