@@ -9,9 +9,8 @@ class FT_Sensor():
         self.sensor.connect()
 
     def getVals(self):
-        vals = self.sensor.read_holding_registers(180, 6, unit = 0x0009)
         l = []
-        for registers in vals.registers:
+        for registers in self.sensor.read_holding_registers(180, 6, unit = 0x0009).registers:
             l.append(twos_comp(registers, 16))
         return l
 
