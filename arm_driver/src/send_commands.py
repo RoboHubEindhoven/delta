@@ -33,19 +33,17 @@ class Sender():
             print("Robot is disabled")
 
     def sendMove(self, x, y, z, rx, ry, rz, speed, frame):
-        xu = twos_comp(x*1000, 32) 
-        yu = twos_comp(y*1000, 32)
-        zu = twos_comp(z*1000, 32)
-        rxu = twos_comp(rx*1000, 32)
-        ryu = twos_comp(ry*1000, 32)
-        rzu = twos_comp(rz*1000, 32)
-        print("Moving to position: x=%s, y=%s, z=%s, rx=%s, ry=%s, rz=%s" % (x,y,z,rx,ry,rz))
-
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
 
         if self.c.is_open():
+            xu = twos_comp(x*1000, 32) 
+            yu = twos_comp(y*1000, 32)
+            zu = twos_comp(z*1000, 32)
+            rxu = twos_comp(rx*1000, 32)
+            ryu = twos_comp(ry*1000, 32)
+            rzu = twos_comp(rz*1000, 32)
             xh = xu >> 16
             xl = xu & 0x0000FFFF
             yh = yu >> 16
@@ -58,6 +56,8 @@ class Sender():
             ryl = ryu & 0x0000FFFF
             rzh = rzu >> 16
             rzl = rzu & 0x0000FFFF
+            print("Moving to position: x=%s, y=%s, z=%s, rx=%s, ry=%s, rz=%s" % (x,y,z,rx,ry,rz))
+            print(yh, yl)
             self.c.write_single_register(0x0330, xl)
             self.c.write_single_register(0x0331, xh)
             self.c.write_single_register(0x0332, yl)
@@ -155,9 +155,9 @@ if __name__ == "__main__":
     s = Sender()
     s.enableRobot()
     s.goHome()
-    s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
+    s.sendMove(400, -150, 850, 180, 0, 0, 100, 'world')
     s.sendMove(400, 0, 600, 180, 0, 0, 100, 'world')
-    s.sendMove(100, 200, 900, 180, 0, 0, 100, 'world')
+    s.sendMove(100, -200, 900, 180, 0, 0, 100, 'world')
     s.disableRobot()
 
 
