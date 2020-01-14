@@ -16,9 +16,9 @@ class FT_Sensor():
         return l
 
 def twos_comp(val, bits):
-    if (val & (1 << (bits - 1))) != 0: # if sign bit is set e.g., 8bit: 128-255
-        val = val - (1 << bits)        # compute negative value
-    return val                         # return positive value as is
+    if (val & (1 << (bits - 1))) != 0:
+        val = val - (1 << bits)
+    return val
 
 if __name__ == "__main__":
     s = FT_Sensor()
