@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
-import time
 
 class FT_Sensor():
     def __init__(self):
