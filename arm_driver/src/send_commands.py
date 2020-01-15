@@ -2,6 +2,7 @@
 
 from pyModbusTCP.client import ModbusClient
 import time
+import numpy as np
 
 class Sender():
     """The "Sender" class contains methods to control the robot.
@@ -58,12 +59,12 @@ class Sender():
                 print("Unable to connect\nTrying to connect...")
 
         if self.c.is_open():
-            xu = twos_comp(x*1000, 32) 
-            yu = twos_comp(y*1000, 32)
-            zu = twos_comp(z*1000, 32)
-            rxu = twos_comp(rx*1000, 32)
-            ryu = twos_comp(ry*1000, 32)
-            rzu = twos_comp(rz*1000, 32)
+            xu = int(np.binary_repr(x*1000, width=32), 2)
+            yu = int(np.binary_repr(y*1000, width=32), 2)
+            zu = int(np.binary_repr(z*1000, width=32), 2)
+            rxu = int(np.binary_repr(rx*1000, width=32), 2)
+            ryu = int(np.binary_repr(ry*1000, width=32), 2)
+            rzu = int(np.binary_repr(rz*1000, width=32), 2)
             xh = xu >> 16
             xl = xu & 0x0000FFFF
             yh = yu >> 16
@@ -77,7 +78,6 @@ class Sender():
             rzh = rzu >> 16
             rzl = rzu & 0x0000FFFF
             print("Moving to position: x=%s, y=%s, z=%s, rx=%s, ry=%s, rz=%s" % (x,y,z,rx,ry,rz))
-            print(yh, yl)
             self.c.write_single_register(0x0330, xl)
             self.c.write_single_register(0x0331, xh)
             self.c.write_single_register(0x0332, yl)
@@ -189,27 +189,13 @@ class Sender():
             pass
         time.sleep(1.5)
 
-def twos_comp(val, bits):
-    """Returns the 2's complement of a integer. This function takes positive and negative integers.
-    
-    Arguments:
-        val {int} -- [Input integer to take the 2's complement from]
-        bits {int} -- [The amount of bits to calculate the 2's complement from]
-    
-    Returns:
-        [int] -- [2's complement of input integer]
-    """
-    if (val & (1 << (bits - 1))) != 0: # if sign bit is set e.g., 8bit: 128-255
-        val = val - (1 << bits)        # compute negative value
-    return val                         # return positive value as is
-
 if __name__ == "__main__":
     s = Sender()
     s.enableRobot()
     s.goHome()
-    s.sendMove(400, -150, 850, 180, 0, 0, 100, 'world')
-    s.sendMove(400, 0, 600, 180, 0, 0, 100, 'world')
-    s.sendMove(100, -200, 900, 180, 0, 0, 100, 'world')
+    s.sendMove(400, 250, 850, 180, 0, 0, 100, 'world')
+    s.sendMove(400, 0, 600, 90, 0, 0, 100, 'world')
+    s.sendMove(100, -300, 900, 90, 0, 0, 100, 'world')
     s.disableRobot()
 
 
