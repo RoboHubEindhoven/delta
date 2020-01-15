@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from send_commands import Sender
 import pygame
 
 class PS4_Controller():
@@ -8,6 +9,8 @@ class PS4_Controller():
         self.controller = pygame.joystick.Joystick(0)
         self.controller.init()
         self.axis_data = {}
+        self.robot = Sender()
+        self.robot.enableRobot()
         
     def listen(self):
         try:
@@ -15,39 +18,54 @@ class PS4_Controller():
                 events = pygame.event.get()
                 for event in events:
                     if event.type == pygame.JOYBUTTONDOWN:
-                        if self.controller.get_button(0):
-                            print("X Pressed")
-                        elif self.controller.get_button(1):
-                            print("Circle Pressed")
-                        elif self.controller.get_button(2):
-                            print("Triangle Pressed")
-                        elif self.controller.get_button(3):
-                            print("Square Pressed")
-                        elif self.controller.get_button(4):
-                            print("L1 Pressed")
+                        if self.controller.get_button(4):
+                            self.robot.jogRobot("RZ-")
+                            print("Moving in RZ- direction")
                         elif self.controller.get_button(5):
-                            print("R1 Pressed")
-                        elif self.controller.get_button(6):
-                            print("L2 Pressed")
-                        elif self.controller.get_button(7):
-                            print("R2 Pressed")
-                        elif self.controller.get_button(8):
-                            print("SHARE Pressed")
-                        elif self.controller.get_button(9):
-                            print("OPTIONS Pressed")
-                        elif self.controller.get_button(10):
-                            print("Power Button Pressed")
-                        elif self.controller.get_button(11):
-                            print("Left Analog Pressed")
-                        elif self.controller.get_button(12):
-                            print("Right Analog Pressed")
-
+                            self.robot.jogRobot("RZ+")
+                            print("Moving in RZ+ direction")
+                            
                     elif event.type == pygame.JOYBUTTONUP:
-                        print("Button Released")
+                        self.robot.jogRobot(None, stop=True)
+                        print("Jogging stopped")
 
                     elif event.type == pygame.JOYAXISMOTION:
                         self.axis_data[event.axis] = round(event.value,2)
-                        print(self.axis_data.get(5))
+                        #print(self.axis_data)
+                    
+                        if self.axis_data.get(0) == -1.0:
+                            self.robot.jogRobot("Y+")
+                            print("Moving in Y+ direction")
+                        elif self.axis_data.get(0) == 1.0:
+                            self.robot.jogRobot("Y-")
+                            print("Moving in Y- direction")
+                        elif self.axis_data.get(1) == -1.0:
+                            self.robot.jogRobot("X+")
+                            print("Moving in X+ direction")
+                        elif self.axis_data.get(1) == 1.0:
+                            self.robot.jogRobot("X-")
+                            print("Moving in X- direction")
+                        elif self.axis_data.get(2) == 1.0:
+                            self.robot.jogRobot("Z-")
+                            print("Moving in Z- direction")
+                        elif self.axis_data.get(3) == -1.0:
+                            self.robot.jogRobot("RY+")
+                            print("Moving in RY+ direction")
+                        elif self.axis_data.get(3) == 1.0:
+                            self.robot.jogRobot("RY-")
+                            print("Moving in RY- direction")
+                        elif self.axis_data.get(4) == -1.0:
+                            self.robot.jogRobot("RX+")
+                            print("Moving in RX+ direction")
+                        elif self.axis_data.get(4) == 1.0:
+                            self.robot.jogRobot("RX-")
+                            print("Moving in RX- direction")
+                        elif self.axis_data.get(5) == 1.0:
+                            self.robot.jogRobot("Z+")
+                            print("Moving in Z+ direction")
+                        else:
+                            self.robot.jogRobot(None, stop=True)
+                            print("Jogging stopped")
 
         except KeyboardInterrupt:
             print("EXITING NOW")

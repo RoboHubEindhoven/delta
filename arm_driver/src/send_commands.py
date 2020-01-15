@@ -101,43 +101,34 @@ class Sender():
                 print("Unable to connect\nTrying to connect...")
 
         if self.c.is_open():
+            self.c.write_single_register(0x033E, 0)
+            self.c.write_single_register(0x0324, 80)
             if stop == True:
-                self.c.write_single_register(0x0259, 0x0000)
-                self.c.write_single_register(0x025A, 0x0000)
-                self.c.write_single_register(0x025B, 0x0000)
-                self.c.write_single_register(0x025C, 0x0000)
-                self.c.write_single_register(0x025D, 0x0000)
-                self.c.write_single_register(0x025E, 0x0000)
-                self.c.write_single_register(0x025F, 0x0000)
-                self.c.write_single_register(0x0260, 0x0000)
-                self.c.write_single_register(0x0261, 0x0000)
-                self.c.write_single_register(0x0262, 0x0000)
-                self.c.write_single_register(0x0263, 0x0000)
-                self.c.write_single_register(0x0264, 0x0000)
+                self.c.write_single_register(0x0300, 0)
             elif direction == "X+":
-                self.c.write_single_register(0x0259, 0xFFFF)
+                self.c.write_single_register(0x0300, 601)
             elif direction == "X-":
-                self.c.write_single_register(0x025A, 0xFFFF)
+                self.c.write_single_register(0x0300, 602)
             elif direction == "Y+":
-                self.c.write_single_register(0x025B, 0xFFFF)
+                self.c.write_single_register(0x0300, 603)
             elif direction == "Y-":
-                self.c.write_single_register(0x025C, 0xFFFF)
+                self.c.write_single_register(0x0300, 604)
             elif direction == "Z+":
-                self.c.write_single_register(0x025D, 0xFFFF)
+                self.c.write_single_register(0x0300, 605)
             elif direction == "Z-":
-                self.c.write_single_register(0x025E, 0xFFFF)
+                self.c.write_single_register(0x0300, 606)
             elif direction == "RX+":
-                self.c.write_single_register(0x025F, 0xFFFF)
+                self.c.write_single_register(0x0300, 607)
             elif direction == "RX-":
-                self.c.write_single_register(0x0260, 0xFFFF)
+                self.c.write_single_register(0x0300, 608)
             elif direction == "RY+":
-                self.c.write_single_register(0x0261, 0xFFFF)
+                self.c.write_single_register(0x0300, 609)
             elif direction == "RY-":
-                self.c.write_single_register(0x0262, 0xFFFF)
+                self.c.write_single_register(0x0300, 610)
             elif direction == "RZ+":
-                self.c.write_single_register(0x0263, 0xFFFF)
+                self.c.write_single_register(0x0300, 611)
             elif direction == "RZ-":
-                self.c.write_single_register(0x0264, 0xFFFF)
+                self.c.write_single_register(0x0300, 612)
 
     def goHome(self):
         """This function moves the robot to the home position that is set in the robot software.
