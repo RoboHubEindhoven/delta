@@ -18,16 +18,13 @@ class PS4_Controller():
             while True:
                 events = pygame.event.get()
                 for event in events:
-                    if event.type == pygame.JOYBUTTONDOWN:
-                        self.button_data[event.button] = True
-                        print(self.button_data)
-                            
-                    elif event.type == pygame.JOYBUTTONUP:
-                        self.button_data[event.button] = False
-                        print(self.button_data)
-
-                    elif event.type == pygame.JOYAXISMOTION:
-                        self.axis_data[event.axis] = round(event.value,2)
+                    if event.type == pygame.JOYAXISMOTION or event.type == pygame.JOYBUTTONUP or event.type == pygame.JOYBUTTONDOWN:
+                        if event.type == pygame.JOYBUTTONDOWN:
+                            self.button_data[event.button] = True
+                        if event.type == pygame.JOYBUTTONUP:
+                            self.button_data[event.button] = False
+                        if event.type == pygame.JOYAXISMOTION:
+                            self.axis_data[event.axis] = round(event.value,2)
                 
                         if self.axis_data.get(0) == -1.0:
                             self.robot.jogRobot("Y+")
