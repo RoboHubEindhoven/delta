@@ -9,6 +9,7 @@ class PS4_Controller():
         self.controller = pygame.joystick.Joystick(0)
         self.controller.init()
         self.axis_data = {}
+        self.button_data = {}
         self.robot = Sender()
         self.robot.enableRobot()
         
@@ -18,21 +19,16 @@ class PS4_Controller():
                 events = pygame.event.get()
                 for event in events:
                     if event.type == pygame.JOYBUTTONDOWN:
-                        if self.controller.get_button(4):
-                            self.robot.jogRobot("RZ-")
-                            print("Moving in RZ- direction")
-                        elif self.controller.get_button(5):
-                            self.robot.jogRobot("RZ+")
-                            print("Moving in RZ+ direction")
+                        self.button_data[event.button] = True
+                        print(self.button_data)
                             
                     elif event.type == pygame.JOYBUTTONUP:
-                        self.robot.jogRobot(None, stop=True)
-                        print("Jogging stopped")
+                        self.button_data[event.button] = False
+                        print(self.button_data)
 
                     elif event.type == pygame.JOYAXISMOTION:
                         self.axis_data[event.axis] = round(event.value,2)
-                        #print(self.axis_data)
-                    
+                
                         if self.axis_data.get(0) == -1.0:
                             self.robot.jogRobot("Y+")
                             print("Moving in Y+ direction")
@@ -63,9 +59,20 @@ class PS4_Controller():
                         elif self.axis_data.get(5) == 1.0:
                             self.robot.jogRobot("Z+")
                             print("Moving in Z+ direction")
+                        elif self.button_data.get(4) == True:
+                            self.robot.jogRobot("RZ-")
+                            print("Moving in RZ- direction")
+                        elif self.button_data.get(5) == True:
+                            self.robot.jogRobot("RZ+")
+                            print("Moving in RZ+ direction")
+                        elif self.button_data.get(10) == True:
+                            self.robot.goHome()
+                            self.button_data[10] = False
+                            print("Homing robot")
                         else:
                             self.robot.jogRobot(None, stop=True)
                             print("Jogging stopped")
+                        
 
         except KeyboardInterrupt:
             print("EXITING NOW")
