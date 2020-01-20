@@ -11,7 +11,6 @@ class PS4_Controller():
         self.axis_data = {}
         self.button_data = {}
         self.robot = Sender()
-        self.robot.enableRobot()
         
     def listen(self):
         try:
@@ -62,6 +61,18 @@ class PS4_Controller():
                         elif self.button_data.get(5) == True:
                             self.robot.jogRobot("RZ+")
                             print("Moving in RZ+ direction")
+                        elif self.button_data.get(9) == True:
+                            self.robot.resetErrors()
+                            self.button_data[9] = False
+                            print("Resetting errors")
+                        elif self.button_data.get(8) == True:
+                            self.robot.disableRobot()
+                            self.button_data[8] = False
+                            print("Robot disabled")
+                        elif self.button_data.get(0) == True:
+                            self.robot.enableRobot()
+                            self.button_data[0] = False
+                            print("Robot enabled")
                         elif self.button_data.get(10) == True:
                             self.robot.goHome()
                             self.button_data[10] = False
