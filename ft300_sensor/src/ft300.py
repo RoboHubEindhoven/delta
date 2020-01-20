@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 
 import rospy
+import yaml
 from geometry_msgs.msg import Wrench
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 
 class FT_Sensor():
     def __init__(self):
+        f = open('/home/remco/catkin_ws/src/delta/ft300_sensor/yaml/calibration.yaml', 'r')
+        self.d = yaml.load(f)
+        f.close()
         self.pub = rospy.Publisher('/ft_data', Wrench, queue_size=10)
         rospy.init_node("forcetorque_publisher")
         self.data = Wrench()
@@ -16,13 +20,25 @@ class FT_Sensor():
         l = []
         for registers in self.sensor.read_holding_registers(180, 6, unit = 0x0009).registers:
             l.append(twos_comp(registers, 16))
-        self.data.force.x = l[0]
-        self.data.force.y = l[1]
-        self.data.force.z = l[2]
-        self.data.torque.x = l[3]
-        self.data.torque.y = l[4]
-        self.data.torque.z = l[5]
+        self.data.force.x = l[0] - self.d['fx']
+        self.data.force.y = l[1] - self.d['fy']
+        self.data.force.z = l[2] - self.d['fz']
+        self.data.torque.x = l[3]- self.d['mx']
+        self.data.torque.y = l[4] - self.d['my']
+        self.data.torque.z = l[5] - self.d['mz']
         self.pub.publish(self.data)
+
+    def calibrate(self):
+        l = []
+        for registers in self.sensor.read_holding_registers(180, 6, unit = 0x0009).registers:
+            l.append(twos_comp(registers, 16))
+        di = {'fx':l[0], 'fy':l[1], 'fz':l[2], 'mx':l[3], 'my':l[4], 'mz':l[5]}
+        f = open('/home/remco/catkin_ws/src/delta/ft300_sensor/yaml/calibration.yaml', 'w')
+        yaml.dump(di, f, default_flow_style=False)
+        f.close()
+        f = open('/home/remco/catkin_ws/src/delta/ft300_sensor/yaml/calibration.yaml', 'r')
+        self.d = yaml.load(f)
+        f.close()
 
 def twos_comp(val, bits):
     if (val & (1 << (bits - 1))) != 0:
@@ -31,5 +47,6 @@ def twos_comp(val, bits):
 
 if __name__ == "__main__":
     s = FT_Sensor()
+    s.calibrate()
     while not rospy.is_shutdown():
         s.pubVals()
