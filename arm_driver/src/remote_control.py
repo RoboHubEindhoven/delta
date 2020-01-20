@@ -2,9 +2,11 @@
 
 from send_commands import Sender
 import pygame
+import os
 
 class PS4_Controller():
     def __init__(self):
+        os.environ["SDL_VIDEODRIVER"] = "dummy"
         pygame.init()
         self.controller = pygame.joystick.Joystick(0)
         self.controller.init()
