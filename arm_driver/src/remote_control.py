@@ -2,9 +2,11 @@
 
 from send_commands import Sender
 import pygame
+import os
 
 class PS4_Controller():
     def __init__(self):
+        os.environ["SDL_VIDEODRIVER"] = "dummy"
         pygame.init()
         self.controller = pygame.joystick.Joystick(0)
         self.controller.init()
@@ -79,7 +81,7 @@ class PS4_Controller():
                             print("Homing robot")
                         else:
                             self.robot.jogRobot(None, stop=True)
-                            print("Jogging stopped")
+                            #print("Jogging stopped")
                         
 
         except KeyboardInterrupt:
