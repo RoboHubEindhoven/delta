@@ -81,7 +81,7 @@ class PS4_Controller():
                             print("Homing robot")
                         else:
                             self.robot.jogRobot(None, stop=True)
-                            print("Jogging stopped")
+                            #print("Jogging stopped")
                         
 
         except KeyboardInterrupt:
