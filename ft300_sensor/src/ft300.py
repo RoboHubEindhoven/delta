@@ -2,7 +2,7 @@
 
 import rospy
 import yaml
-from geometry_msgs.msg import Wrench
+from geometry_msgs.msg import Wrench, WrenchStamped
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 
 class FT_Sensor():
@@ -11,8 +11,10 @@ class FT_Sensor():
         self.d = yaml.load(f)
         f.close()
         self.pub = rospy.Publisher('/ft_data', Wrench, queue_size=10)
+        self.stamped_pub = rospy.Publisher('/stamped_ft_data', WrenchStamped, queue_size=10)
         rospy.init_node("forcetorque_publisher")
         self.data = Wrench()
+        self.stamped_data = WrenchStamped()
         self.sensor = ModbusClient(method='rtu', port='/dev/ttyUSB0', baudrate=19200, timeout=1, stopbits=1)
         self.sensor.connect()
 
@@ -26,7 +28,11 @@ class FT_Sensor():
         self.data.torque.x = l[3]- self.d['mx']
         self.data.torque.y = l[4] - self.d['my']
         self.data.torque.z = l[5] - self.d['mz']
+        self.stamped_data.wrench = self.data
+        self.stamped_data.header.frame_id = "base_link"
+        self.stamped_data.header.stamp = rospy.Time.now()
         self.pub.publish(self.data)
+        self.stamped_pub.publish(self.stamped_data)
 
     def calibrate(self):
         l = []
