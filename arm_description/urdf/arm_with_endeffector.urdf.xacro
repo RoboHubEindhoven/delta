@@ -1,0 +1,10 @@
+<robot name="myrobot" xmlns:xacro="http://www.ros.org/wiki/xacro" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+<xacro:include filename="$(find arm_description)/urdf/delta_urdf_v2.urdf"/>
+<xacro:include filename="$(find arm_description)/urdf/robotiq_ft300.urdf.xacro" />
+
+    <xacro:robotiq_ft300 parent="wrist4_link" prefix="ft300/">
+        <origin xyz="0 0 0" rpy="0 -1.57079632679489661923 0"/> 
+    </xacro:robotiq_ft300>
+
+</robot>
