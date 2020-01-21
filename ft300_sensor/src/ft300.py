@@ -2,6 +2,7 @@
 
 import rospy
 import yaml
+import getpass
 from geometry_msgs.msg import Wrench, WrenchStamped
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 
