@@ -4,6 +4,8 @@
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot
   name="delta_urdf_v2">
+<link name="base">
+   </link>
   <link
     name="base_link">
     <inertial>
@@ -44,6 +46,19 @@
       </geometry>
     </collision>
   </link>
+  <joint
+    name="dummy_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="1.57079632679 0 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="base" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
   <link
     name="shoulder_link">
     <inertial>
@@ -165,7 +180,7 @@
     <inertial>
       <origin
         xyz="0.026153 -0.032487 -3.1699E-06"
-        rpy="0 0 0" />
+        rpy="3.14159265358979 0 0" />
       <mass
         value="3.57" />
       <inertia
@@ -179,7 +194,7 @@
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="3.14159265358979 0 0" />
       <geometry>
         <mesh
           filename="package://arm_description/meshes/wrist1_link.STL" />
@@ -193,7 +208,7 @@
     <collision>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="3.14159265358979 0 0" />
       <geometry>
         <mesh
           filename="package://arm_description/meshes/wrist1_link.STL" />
@@ -262,8 +277,8 @@
     name="wrist2"
     type="revolute">
     <origin
-      xyz="0.0400000444661043 -0.435000000020256 0"
-      rpy="-3.14159265358979 0 1.5707963267949" />
+      xyz="0.0400000444661043 0.435000000020256 0"
+      rpy="0 0 -1.5707963267949" />
     <parent
       link="wrist1_link" />
     <child

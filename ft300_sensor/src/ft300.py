@@ -29,7 +29,7 @@ class FT_Sensor():
         self.data.torque.y = l[4] - self.d['my']
         self.data.torque.z = l[5] - self.d['mz']
         self.stamped_data.wrench = self.data
-        self.stamped_data.header.frame_id = "base_link"
+        self.stamped_data.header.frame_id = "wrist4_link"
         self.stamped_data.header.stamp = rospy.Time.now()
         self.pub.publish(self.data)
         self.stamped_pub.publish(self.stamped_data)
