@@ -4,6 +4,7 @@ import rospy
 import time
 import struct
 import yaml
+import getpass
 from math import radians, pi
 from sensor_msgs.msg import JointState
 from pyModbusTCP.client import ModbusClient
@@ -15,7 +16,8 @@ class JointStatePublisher():
             rospy.init_node("joint_pos_pub")
             self.p = rospy.Publisher('/joint_states', JointState, queue_size=1)
             
-            f = open('/home/delta/catkin_ws/src/delta/arm_driver/yaml/joint_limits.yaml', 'r')
+            name = getpass.getuser()
+            f = open('/home/%s/catkin_ws/src/delta/arm_driver/yaml/joint_limits.yaml' % name, 'r')
             d = yaml.load(f)
             f.close()
 

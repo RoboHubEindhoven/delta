@@ -7,7 +7,8 @@ from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 
 class FT_Sensor():
     def __init__(self):
-        f = open('/home/remco/catkin_ws/src/delta/ft300_sensor/yaml/calibration.yaml', 'r')
+        self.name = getpass.getuser()
+        f = open('/home/%s/catkin_ws/src/delta/ft300_sensor/yaml/calibration.yaml' % self.name, 'r')
         self.d = yaml.load(f)
         f.close()
         self.pub = rospy.Publisher('/ft_data', Wrench, queue_size=10)
@@ -39,10 +40,10 @@ class FT_Sensor():
         for registers in self.sensor.read_holding_registers(180, 6, unit = 0x0009).registers:
             l.append(twos_comp(registers, 16))
         di = {'fx':l[0], 'fy':l[1], 'fz':l[2], 'mx':l[3], 'my':l[4], 'mz':l[5]}
-        f = open('/home/remco/catkin_ws/src/delta/ft300_sensor/yaml/calibration.yaml', 'w')
+        f = open('/home/%s/catkin_ws/src/delta/ft300_sensor/yaml/calibration.yaml' % self.name, 'w')
         yaml.dump(di, f, default_flow_style=False)
         f.close()
-        f = open('/home/remco/catkin_ws/src/delta/ft300_sensor/yaml/calibration.yaml', 'r')
+        f = open('/home/%s/catkin_ws/src/delta/ft300_sensor/yaml/calibration.yaml' % self.name, 'r')
         self.d = yaml.load(f)
         f.close()
 
