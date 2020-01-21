@@ -24,12 +24,12 @@ class FT_Sensor():
         l = []
         for registers in self.sensor.read_holding_registers(180, 6, unit = 0x0009).registers:
             l.append(twos_comp(registers, 16))
-        self.data.force.x = l[0] - self.d['fx']
-        self.data.force.y = l[1] - self.d['fy']
-        self.data.force.z = l[2] - self.d['fz']
-        self.data.torque.x = l[3]- self.d['mx']
-        self.data.torque.y = l[4] - self.d['my']
-        self.data.torque.z = l[5] - self.d['mz']
+        self.data.force.x = l[0]/100 - self.d['fx']
+        self.data.force.y = l[1]/100 - self.d['fy']
+        self.data.force.z = l[2]/100 - self.d['fz']
+        self.data.torque.x = l[3]/1000- self.d['mx']
+        self.data.torque.y = l[4]/1000 - self.d['my']
+        self.data.torque.z = l[5]/1000 - self.d['mz']
         self.stamped_data.wrench = self.data
         self.stamped_data.header.frame_id = "ft300/ft300_sensor"
         self.stamped_data.header.stamp = rospy.Time.now()
@@ -40,7 +40,7 @@ class FT_Sensor():
         l = []
         for registers in self.sensor.read_holding_registers(180, 6, unit = 0x0009).registers:
             l.append(twos_comp(registers, 16))
-        di = {'fx':l[0], 'fy':l[1], 'fz':l[2], 'mx':l[3], 'my':l[4], 'mz':l[5]}
+        di = {'fx':l[0]/100, 'fy':l[1]/100, 'fz':l[2]/100, 'mx':l[3]/1000, 'my':l[4]/1000, 'mz':l[5]/1000}
         f = open('/home/%s/catkin_ws/src/delta/ft300_sensor/yaml/calibration.yaml' % self.name, 'w')
         yaml.dump(di, f, default_flow_style=False)
         f.close()
