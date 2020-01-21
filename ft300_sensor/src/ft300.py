@@ -7,6 +7,8 @@ from geometry_msgs.msg import Wrench, WrenchStamped
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 
 class FT_Sensor():
+    """This is the FT_Sensor class. This class is used for the FT300 sensor with ROS.
+    """
     def __init__(self):
         self.name = getpass.getuser()
         f = open('/home/%s/catkin_ws/src/delta/ft300_sensor/yaml/calibration.yaml' % self.name, 'r')
@@ -21,6 +23,9 @@ class FT_Sensor():
         self.sensor.connect()
 
     def pubVals(self):
+        """This function publishes the force and torque values measured by the forcetorque sensor to the /ft_data and /stamped_ft_data topics.
+        The published messages are Wrench and WrenchStamped.
+        """
         l = []
         for registers in self.sensor.read_holding_registers(180, 6, unit = 0x0009).registers:
             l.append(twos_comp(registers, 16))
@@ -37,6 +42,8 @@ class FT_Sensor():
         self.stamped_pub.publish(self.stamped_data)
 
     def calibrate(self):
+        """This function is used to set the 0 values of the sensor. When this function is called the current force torque values will be set as 0.
+        """
         l = []
         for registers in self.sensor.read_holding_registers(180, 6, unit = 0x0009).registers:
             l.append(twos_comp(registers, 16))
@@ -49,6 +56,15 @@ class FT_Sensor():
         f.close()
 
 def twos_comp(val, bits):
+    """This function is used to calculate the twos complement of a value.
+    
+    Arguments:
+        val {int} -- input value to calculate the twos complement from.
+        bits {int} -- The amount of bits for the twos complement calculation.
+    
+    Returns:
+        [int] -- The twos complement of the input value.
+    """
     if (val & (1 << (bits - 1))) != 0:
         val = val - (1 << bits)
     return val
