@@ -4,6 +4,7 @@ from pyModbusTCP.client import ModbusClient
 import time
 import numpy as np
 import rospy
+import struct
 
 from arm_driver.srv import reset_errors, power
 
@@ -236,6 +237,26 @@ class Sender():
             print(do)
             return do
 
+    def getToolPosition(self):
+        if not self.c.is_open():
+            if not self.c.open():
+                print("Unable to connect\nTrying to connect...")
+
+        if self.c.is_open():
+            x_r = self.c.read_holding_registers(0x00F0, 2)
+            x = struct.unpack('i', struct.pack('HH', x_r[0], x_r[1]))[0]/1000
+            y_r = self.c.read_holding_registers(0x00F2, 2)
+            y = struct.unpack('i', struct.pack('HH', y_r[0], y_r[1]))[0]/1000
+            z_r = self.c.read_holding_registers(0x00F4, 2)
+            z = struct.unpack('i', struct.pack('HH', z_r[0], z_r[1]))[0]/1000
+            rx_r = self.c.read_holding_registers(0x00F6, 2)
+            rx = struct.unpack('i', struct.pack('HH', rx_r[0], rx_r[1]))[0]/1000
+            ry_r = self.c.read_holding_registers(0x00F8, 2)
+            ry = struct.unpack('i', struct.pack('HH', ry_r[0], ry_r[1]))[0]/1000
+            rz_r = self.c.read_holding_registers(0x00FA, 2)
+            rz = struct.unpack('i', struct.pack('HH', rz_r[0], rz_r[1]))[0]/1000
+            return [x,y,z,rx,ry,rz]
+
     def resetUserDigitalOutputs(self):
         """With this function it's possible to reset all user digital outputs to 0.
         """
@@ -285,6 +306,8 @@ if __name__ == "__main__":
     s.sendPositionMove(350, -150, 600, -180, 0, 0, 100, 'world')
     s.sendPositionMove(350, 150, 600, -180, 0, 0, 100, 'world')
     s.sendArcMove([300, 0, 600, -180, 0, 0], [350, 20, 600, -180, 0, 0])
+    while not rospy.is_shutdown():
+        print(s.getToolPosition())
     rospy.spin()
     
     #s.goHome()
