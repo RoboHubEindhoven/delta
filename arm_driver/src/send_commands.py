@@ -40,7 +40,7 @@ class Sender():
             time.sleep(3)
             print("Robot is disabled")
 
-    def sendMove(self, x, y, z, rx, ry, rz, speed, frame):
+    def sendPositionMove(self, x, y, z, rx, ry, rz, speed, frame):
         """This function is used to move the end effector of the robot to a certain position.
         !!!The robot needs to be enables for this function to work!!!
         
@@ -93,7 +93,42 @@ class Sender():
             self.c.write_single_register(0x033E, 0)
             self.c.write_single_register(0x0324, speed)
             self.c.write_single_register(0x300, 301)
-            self.waitForEndMove()
+            #self.waitForEndMove()
+
+    def sendArcMove(self, p1, p2):
+        if not self.c.is_open():
+            if not self.c.open():
+                print("Unable to connect\nTrying to connect...")
+
+        if self.c.is_open():
+            x1 = int(np.binary_repr(p1[0], width=16), 2)
+            y1 = int(np.binary_repr(p1[1], width=16), 2)
+            z1 = int(np.binary_repr(p1[2], width=16), 2)
+            rx1 = int(np.binary_repr(p1[3], width=16), 2)
+            ry1 = int(np.binary_repr(p1[4], width=16), 2)
+            rz1 = int(np.binary_repr(p1[5], width=16), 2)
+            x2 = int(np.binary_repr(p2[0], width=16), 2)
+            y2 = int(np.binary_repr(p2[1], width=16), 2)
+            z2 = int(np.binary_repr(p2[2], width=16), 2)
+            rx2 = int(np.binary_repr(p2[3], width=16), 2)
+            ry2 = int(np.binary_repr(p2[4], width=16), 2)
+            rz2 = int(np.binary_repr(p2[5], width=16), 2)
+            self.c.write_single_register(0x1000, x1)
+            self.c.write_single_register(0x1001, y1)
+            self.c.write_single_register(0x1002, z1)
+            self.c.write_single_register(0x1003, rx1)
+            self.c.write_single_register(0x1004, ry1)
+            self.c.write_single_register(0x1005, rz1)
+            self.c.write_single_register(0x1006, x2)
+            self.c.write_single_register(0x1007, y2)
+            self.c.write_single_register(0x1008, z2)
+            self.c.write_single_register(0x1009, rx2)
+            self.c.write_single_register(0x100A, ry2)
+            self.c.write_single_register(0x100B, rz2)
+            self.c.write_single_register(0x0220, 4)
+            self.c.write_single_register(0x0228, 6)
+            print("Moving arc")
+            #self.waitForEndMove()
 
     def jogRobot(self, direction, stop=False):
         if not self.c.is_open():
@@ -207,7 +242,7 @@ class Sender():
 
     def resetErrors(self):
         """With this function it's possible to reset all errors.
-        !!!ONLY USE THIS FUNCTION WHEN YOU'RE IT'S SAFE!!!
+        !!!ONLY USE THIS FUNCTION WHEN IT'S SAFE!!!
         """
         if not self.c.is_open():
             if not self.c.open():
@@ -219,20 +254,29 @@ class Sender():
             self.c.write_single_register(0x0180, 0x0000)
 
     def waitForEndMove(self):
-        time.sleep(1.5)
+        time.sleep(2)
         while self.c.read_holding_registers(0x00E0, 1)[0] == 1:
-            pass
-        time.sleep(1.5)
+            if self.c.read_holding_registers(0x00E0, 1)[0] == 0:
+                print(self.c.read_holding_registers(0x00E0, 1)[0])
+                break
+            elif self.c.read_holding_registers(0x00E0, 1)[0] == 1:
+                print(self.c.read_holding_registers(0x00E0, 1)[0])
+                continue
 
 if __name__ == "__main__":
     s = Sender()
-    s.enableRobot()
-    s.goHome()
-    s.sendMove(400, 250, 850, 180, 0, 0, 100, 'world')
-    s.sendMove(400, 0, 600, 90, 0, 0, 100, 'world')
-    s.sendMove(100, -300, 900, 90, 0, 0, 100, 'world')
-    s.disableRobot()
-
+    #s.enableRobot()
+    s.sendPositionMove(350, -150, 600, -180, 0, 0, 100, 'world')
+    s.waitForEndMove()
+    s.sendPositionMove(350, 150, 600, -180, 0, 0, 100, 'world')
+    s.waitForEndMove()
+    s.sendArcMove([300, 0, 600, -180, 0, 0], [350, 20, 600, -180, 0, 0])
+    
+    #s.goHome()
+    #s.sendPositionMove(400, 250, 850, 180, 0, 0, 100, 'world')
+    #s.sendPositionMove(400, 0, 600, 90, 0, 0, 100, 'world')
+    #s.sendPositionMove(100, -300, 900, 90, 0, 0, 100, 'world')
+    #s.disableRobot()
 
     #while True:
         #s.writeDigitalOutput(1, True)
