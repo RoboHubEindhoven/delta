@@ -270,7 +270,6 @@ class Sender():
                 continue
 
     def powerCallback(self, msg):
-        print(msg.on)
         if msg.on == True:
             self.enableRobot()
             return True
