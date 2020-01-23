@@ -3,11 +3,16 @@
 from pyModbusTCP.client import ModbusClient
 import time
 import numpy as np
+import rospy
+
+from arm_driver.srv import reset_errors
 
 class Sender():
     """The "Sender" class contains methods to control the robot.
     """
     def __init__(self):
+        rospy.init_node("RobotArm")
+        self.resetService = rospy.Service('/reset_robot', reset_errors, self.resetErrors)
         self.c = ModbusClient(host="192.168.1.1", auto_open=True, auto_close=False, port=502, debug=False, unit_id=2)
         self.bits = 0
 
@@ -240,18 +245,20 @@ class Sender():
         if self.c.is_open():
             self.c.write_single_register(0x02FE, 0)
 
-    def resetErrors(self):
+    def resetErrors(self, msg):
         """With this function it's possible to reset all errors.
         !!!ONLY USE THIS FUNCTION WHEN IT'S SAFE!!!
         """
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
+                return False
 
         if self.c.is_open():
             self.c.write_single_register(0x0180, 0xFFFF)
             time.sleep(0.1)
             self.c.write_single_register(0x0180, 0x0000)
+            return True
 
     def waitForEndMove(self):
         time.sleep(2)
@@ -267,6 +274,7 @@ if __name__ == "__main__":
     s.sendPositionMove(350, -150, 600, -180, 0, 0, 100, 'world')
     s.sendPositionMove(350, 150, 600, -180, 0, 0, 100, 'world')
     s.sendArcMove([300, 0, 600, -180, 0, 0], [350, 20, 600, -180, 0, 0])
+    rospy.spin()
     
     #s.goHome()
     #s.sendPositionMove(400, 250, 850, 180, 0, 0, 100, 'world')
