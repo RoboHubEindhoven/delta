@@ -93,7 +93,7 @@ class Sender():
             self.c.write_single_register(0x033E, 0)
             self.c.write_single_register(0x0324, speed)
             self.c.write_single_register(0x300, 301)
-            #self.waitForEndMove()
+            self.waitForEndMove()
 
     def sendArcMove(self, p1, p2):
         if not self.c.is_open():
@@ -127,8 +127,8 @@ class Sender():
             self.c.write_single_register(0x100B, rz2)
             self.c.write_single_register(0x0220, 4)
             self.c.write_single_register(0x0228, 6)
-            print("Moving arc")
-            #self.waitForEndMove()
+            print("Moving arc through %s to %s" % (p1, p2))
+            self.waitForEndMove()
 
     def jogRobot(self, direction, stop=False):
         if not self.c.is_open():
@@ -257,19 +257,15 @@ class Sender():
         time.sleep(2)
         while self.c.read_holding_registers(0x00E0, 1)[0] == 1:
             if self.c.read_holding_registers(0x00E0, 1)[0] == 0:
-                print(self.c.read_holding_registers(0x00E0, 1)[0])
                 break
             elif self.c.read_holding_registers(0x00E0, 1)[0] == 1:
-                print(self.c.read_holding_registers(0x00E0, 1)[0])
                 continue
 
 if __name__ == "__main__":
     s = Sender()
     #s.enableRobot()
     s.sendPositionMove(350, -150, 600, -180, 0, 0, 100, 'world')
-    s.waitForEndMove()
     s.sendPositionMove(350, 150, 600, -180, 0, 0, 100, 'world')
-    s.waitForEndMove()
     s.sendArcMove([300, 0, 600, -180, 0, 0], [350, 20, 600, -180, 0, 0])
     
     #s.goHome()
