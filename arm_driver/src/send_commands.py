@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 
 from pyModbusTCP.client import ModbusClient
+from math import radians
 import time
 import numpy as np
 import rospy
 import struct
+import yaml
+import getpass
 
 from arm_driver.srv import reset_errors, power
 
@@ -17,6 +20,7 @@ class Sender():
         self.powerService = rospy.Service('/power_robot', power, self.powerCallback)
         self.c = ModbusClient(host="192.168.1.1", auto_open=True, auto_close=False, port=502, debug=False, unit_id=2)
         self.bits = 0
+        self.name = getpass.getuser()
 
     def enableRobot(self):
         """This function enables the robot. After this function is called, the robot is ready to move.
@@ -257,6 +261,44 @@ class Sender():
             rz = struct.unpack('i', struct.pack('HH', rz_r[0], rz_r[1]))[0]/1000
             return [x,y,z,rx,ry,rz]
 
+    def getJointPositions(self):
+        if not self.c.is_open():
+            if not self.c.open():
+                print("Unable to connect\nTrying to connect...")
+
+        if self.c.is_open():
+            j1 = self.c.read_holding_registers(0x0168, 2)
+            j1_a = struct.unpack('i', struct.pack('HH', j1[0], j1[1]))[0]
+            j1_angle = radians(j1_a/1000)
+            j2 = self.c.read_holding_registers(0x016A, 2)
+            j2_a = struct.unpack('i', struct.pack('HH', j2[0], j2[1]))[0]
+            j2_angle = radians(j2_a/1000)
+            j3 = self.c.read_holding_registers(0x016C, 2)
+            j3_a = struct.unpack('i', struct.pack('HH', j3[0], j3[1]))[0]
+            j3_angle = radians(j3_a/1000)
+            j4 = self.c.read_holding_registers(0x016E, 2)
+            j4_a = struct.unpack('i', struct.pack('HH', j4[0], j4[1]))[0]
+            j4_angle = radians(j4_a/1000)
+            j5 = self.c.read_holding_registers(0x0150, 2)
+            j5_a = struct.unpack('i', struct.pack('HH', j5[0], j5[1]))[0]
+            j5_angle = radians(j5_a/1000)
+            j6 = self.c.read_holding_registers(0x0152, 2)
+            j6_a = struct.unpack('i', struct.pack('HH', j6[0], j6[1]))[0]
+            j6_angle = radians(j6_a/1000)
+            return [j1_angle, j2_angle, j3_angle, j4_angle, j5_angle, j6_angle]
+
+    def saveToolPose(self, name, pose):
+        f = open('/home/%s/catkin_ws/src/delta/arm_driver/yaml/poses.yaml' % self.name, 'w')
+        dictionary = {name: pose}
+        yaml.dump(dictionary, f, default_flow_style=False)
+        f.close()
+
+    def getSavedToolPose(self, name):
+        f = open('/home/%s/catkin_ws/src/delta/arm_driver/yaml/poses.yaml' % self.name, 'r')
+        d = yaml.load(f)
+        f.close()
+        return d.get(name)
+
     def resetUserDigitalOutputs(self):
         """With this function it's possible to reset all user digital outputs to 0.
         """
@@ -306,8 +348,8 @@ if __name__ == "__main__":
     s.sendPositionMove(350, -150, 600, -180, 0, 0, 100, 'world')
     s.sendPositionMove(350, 150, 600, -180, 0, 0, 100, 'world')
     s.sendArcMove([300, 0, 600, -180, 0, 0], [350, 20, 600, -180, 0, 0])
-    while not rospy.is_shutdown():
-        print(s.getToolPosition())
+    s.saveToolPose('pos1', s.getToolPosition())
+    print(s.getSavedToolPose("pos1"))
     rospy.spin()
     
     #s.goHome()
