@@ -9,7 +9,7 @@ import struct
 import yaml
 import getpass
 
-from arm_driver.srv import reset_errors, power
+from arm_driver.srv import reset_errors, power, teach_position
 
 class Sender():
     """The "Sender" class contains methods to control the robot.
@@ -18,6 +18,7 @@ class Sender():
         rospy.init_node("RobotArm")
         self.resetService = rospy.Service('/reset_robot', reset_errors, self.resetErrors)
         self.powerService = rospy.Service('/power_robot', power, self.powerCallback)
+        self.teachService = rospy.Service("/teach_position", teach_position, self.teachCurrentToolPose)
         self.c = ModbusClient(host="192.168.1.1", auto_open=True, auto_close=False, port=502, debug=False, unit_id=2)
         self.bits = 0
         self.name = getpass.getuser()
@@ -293,9 +294,9 @@ class Sender():
         try:
             for n in d:
                 if n == name:
-                    print("Pose %s already exists, delete the old pose and try again" % name)
                     f.close()
-                    return
+                    print("Pose %s already exists, delete the old pose and try again" % name)
+                    return False
         except TypeError:
             pass
         f = open('/home/%s/catkin_ws/src/delta/arm_driver/yaml/poses.yaml' % self.name, 'a')
@@ -303,6 +304,10 @@ class Sender():
         yaml.dump(d, f, default_flow_style=False)
         f.close()
         print("Pose %s is saved" % name)
+        return True
+
+    def teachCurrentToolPose(self, msg):
+        return self.saveToolPose(msg.name, self.getToolPosition())
 
     def getSavedToolPose(self, name):
         f = open('/home/%s/catkin_ws/src/delta/arm_driver/yaml/poses.yaml' % self.name, 'r')

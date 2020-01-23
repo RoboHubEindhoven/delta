@@ -59,6 +59,7 @@ add_service_files(
   FILES
   reset_errors.srv
   power.srv
+  teach_position.srv
 )
 
 ## Generate actions in the 'action' folder
