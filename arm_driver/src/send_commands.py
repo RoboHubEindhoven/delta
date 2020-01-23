@@ -313,7 +313,10 @@ class Sender():
         f = open('/home/%s/catkin_ws/src/delta/arm_driver/yaml/poses.yaml' % self.name, 'r')
         d = yaml.load(f)
         f.close()
-        return d.get(name)
+        try:
+            return d.get(name)
+        except AttributeError:
+            return "Position does not exist"
 
     def resetUserDigitalOutputs(self):
         """With this function it's possible to reset all user digital outputs to 0.
@@ -362,11 +365,8 @@ if __name__ == "__main__":
     s = Sender()
     #s.enableRobot()
     s.sendPositionMove(350, -150, 600, -180, 0, 0, 100, 'world')
-    s.saveToolPose('pos1', s.getToolPosition())
     s.sendPositionMove(350, 150, 600, -180, 0, 0, 100, 'world')
-    s.saveToolPose('pos2', s.getToolPosition())
     s.sendArcMove([300, 0, 600, -180, 0, 0], [350, 20, 600, -180, 0, 0])
-    s.saveToolPose('pos3', s.getToolPosition())
     print(s.getSavedToolPose("pos1"))
     print(s.getSavedToolPose("pos2"))
     print(s.getSavedToolPose("pos3"))
