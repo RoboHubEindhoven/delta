@@ -288,10 +288,21 @@ class Sender():
             return [j1_angle, j2_angle, j3_angle, j4_angle, j5_angle, j6_angle]
 
     def saveToolPose(self, name, pose):
-        f = open('/home/%s/catkin_ws/src/delta/arm_driver/yaml/poses.yaml' % self.name, 'w')
-        dictionary = {name: pose}
-        yaml.dump(dictionary, f, default_flow_style=False)
+        f = open('/home/%s/catkin_ws/src/delta/arm_driver/yaml/poses.yaml' % self.name, 'r')
+        d = yaml.load(f)
+        try:
+            for n in d:
+                if n == name:
+                    print("Pose %s already exists, delete the old pose and try again" % name)
+                    f.close()
+                    return
+        except TypeError:
+            pass
+        f = open('/home/%s/catkin_ws/src/delta/arm_driver/yaml/poses.yaml' % self.name, 'a')
+        d = {name: pose}
+        yaml.dump(d, f, default_flow_style=False)
         f.close()
+        print("Pose %s is saved" % name)
 
     def getSavedToolPose(self, name):
         f = open('/home/%s/catkin_ws/src/delta/arm_driver/yaml/poses.yaml' % self.name, 'r')
@@ -346,10 +357,14 @@ if __name__ == "__main__":
     s = Sender()
     #s.enableRobot()
     s.sendPositionMove(350, -150, 600, -180, 0, 0, 100, 'world')
-    s.sendPositionMove(350, 150, 600, -180, 0, 0, 100, 'world')
-    s.sendArcMove([300, 0, 600, -180, 0, 0], [350, 20, 600, -180, 0, 0])
     s.saveToolPose('pos1', s.getToolPosition())
+    s.sendPositionMove(350, 150, 600, -180, 0, 0, 100, 'world')
+    s.saveToolPose('pos2', s.getToolPosition())
+    s.sendArcMove([300, 0, 600, -180, 0, 0], [350, 20, 600, -180, 0, 0])
+    s.saveToolPose('pos3', s.getToolPosition())
     print(s.getSavedToolPose("pos1"))
+    print(s.getSavedToolPose("pos2"))
+    print(s.getSavedToolPose("pos3"))
     rospy.spin()
     
     #s.goHome()
