@@ -5,7 +5,7 @@ import time
 import numpy as np
 import rospy
 
-from arm_driver.srv import reset_errors
+from arm_driver.srv import reset_errors, power
 
 class Sender():
     """The "Sender" class contains methods to control the robot.
@@ -13,6 +13,7 @@ class Sender():
     def __init__(self):
         rospy.init_node("RobotArm")
         self.resetService = rospy.Service('/reset_robot', reset_errors, self.resetErrors)
+        self.powerService = rospy.Service('/power_robot', power, self.powerCallback)
         self.c = ModbusClient(host="192.168.1.1", auto_open=True, auto_close=False, port=502, debug=False, unit_id=2)
         self.bits = 0
 
@@ -267,6 +268,17 @@ class Sender():
                 break
             elif self.c.read_holding_registers(0x00E0, 1)[0] == 1:
                 continue
+
+    def powerCallback(self, msg):
+        print(msg.on)
+        if msg.on == True:
+            self.enableRobot()
+            return True
+        elif msg.on == False:
+            self.disableRobot()
+            return True
+        else:
+            return False
 
 if __name__ == "__main__":
     s = Sender()
