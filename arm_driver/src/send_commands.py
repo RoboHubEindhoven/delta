@@ -346,10 +346,10 @@ class Sender():
     def waitForEndMove(self, pos):
         done = 0
         while done == 0:
-            if self.getToolPosition() == pos:
-                time.sleep(2.5)
+            if self.getToolPosition() == pos and self.c.read_holding_registers(0x00E0, 1)[0] == 0:
                 done = 1
         print("Position reached")
+        time.sleep(1)
 
     def powerCallback(self, msg):
         if msg.on == True:
@@ -363,12 +363,14 @@ class Sender():
 
 if __name__ == "__main__":
     s = Sender()
+    p1 = s.getSavedToolPose("HomePos")
     m = reset_errors()
     m.on = "true"
     s.resetErrors(m)
     s.enableRobot()
     while not rospy.is_shutdown():
-        p1 = s.getSavedToolPose("HomePos")
+        print("Starting loop")
+        time.sleep(1)
         s.sendPositionMove(p1[0], p1[1], p1[2], p1[3], p1[4], p1[5], 100, 'world')
         s.sendPositionMove(p1[0], p1[1]-100, p1[2]-150, p1[3], p1[4], p1[5], 100, 'world')
         s.sendArcMove([p1[0]-100, p1[1]+50, p1[2]-150, p1[3], p1[4], p1[5]],[p1[0], p1[1]+200, p1[2]-150, p1[3], p1[4], p1[5]])
