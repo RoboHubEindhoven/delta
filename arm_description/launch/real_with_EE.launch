@@ -8,6 +8,7 @@
   <param
     name="use_gui"
     value="$(arg gui)" />
+  <node name="joint_angle_publisher" pkg="arm_driver" type="joint_position_publisher.py"/>
   <node
     name="robot_state_publisher"
     pkg="robot_state_publisher"
