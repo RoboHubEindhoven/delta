@@ -105,7 +105,7 @@ class Sender():
             self.c.write_single_register(0x033E, 0)
             self.c.write_single_register(0x0324, speed)
             self.c.write_single_register(0x300, 301)
-            self.waitForEndMove()
+            self.waitForEndMove([x,y,z,rx,ry,rz])
 
     def sendArcMove(self, p1, p2):
         if not self.c.is_open():
@@ -140,7 +140,7 @@ class Sender():
             self.c.write_single_register(0x0220, 4)
             self.c.write_single_register(0x0228, 6)
             print("Moving arc through %s to %s" % (p1, p2))
-            self.waitForEndMove()
+            self.waitForEndMove(p2)
 
     def jogRobot(self, direction, stop=False):
         if not self.c.is_open():
@@ -343,13 +343,13 @@ class Sender():
             self.c.write_single_register(0x0180, 0x0000)
             return True
 
-    def waitForEndMove(self):
-        time.sleep(2)
-        while self.c.read_holding_registers(0x00E0, 1)[0] == 1:
-            if self.c.read_holding_registers(0x00E0, 1)[0] == 0:
-                break
-            elif self.c.read_holding_registers(0x00E0, 1)[0] == 1:
-                continue
+    def waitForEndMove(self, pos):
+        done = 0
+        while done == 0:
+            if self.getToolPosition() == pos:
+                time.sleep(2.5)
+                done = 1
+        print("Position reached")
 
     def powerCallback(self, msg):
         if msg.on == True:
@@ -360,30 +360,20 @@ class Sender():
             return True
         else:
             return False
+        
+class msg():
+    def __init__(self):
+        self.on = "false"
 
 if __name__ == "__main__":
     s = Sender()
-    #s.enableRobot()
-    s.sendPositionMove(350, -150, 600, -180, 0, 0, 100, 'world')
-    s.sendPositionMove(350, 150, 600, -180, 0, 0, 100, 'world')
-    s.sendArcMove([300, 0, 600, -180, 0, 0], [350, 20, 600, -180, 0, 0])
-    print(s.getSavedToolPose("pos1"))
-    print(s.getSavedToolPose("pos2"))
-    print(s.getSavedToolPose("pos3"))
-    rospy.spin()
-    
-    #s.goHome()
-    #s.sendPositionMove(400, 250, 850, 180, 0, 0, 100, 'world')
-    #s.sendPositionMove(400, 0, 600, 90, 0, 0, 100, 'world')
-    #s.sendPositionMove(100, -300, 900, 90, 0, 0, 100, 'world')
-    #s.disableRobot()
-
-    #while True:
-        #s.writeDigitalOutput(1, True)
-        #s.sendMove(400, 150, 850, 180, 0, 0, 100, 'world')
-        #s.sendMove(150, 0, 800, 180, 0, 90, 100, 'world')
-        #s.writeDigitalOutput(6, True)
-        #s.sendMove(400, -150, 900, 180, 0, 0, 100, 'world')
-        #s.writeDigitalOutput(1, False)
-        #s.goHome()
-        #s.writeDigitalOutput(6, False)
+    m = msg()
+    m.on = "true"
+    s.resetErrors(m)
+    s.enableRobot()
+    while not rospy.is_shutdown():
+        p1 = s.getSavedToolPose("HomePos")
+        s.sendPositionMove(p1[0], p1[1], p1[2], p1[3], p1[4], p1[5], 100, 'world')
+        s.sendPositionMove(p1[0], p1[1]-100, p1[2]-150, p1[3], p1[4], p1[5], 100, 'world')
+        s.sendArcMove([p1[0]-100, p1[1]+50, p1[2]-150, p1[3], p1[4], p1[5]],[p1[0], p1[1]+200, p1[2]-150, p1[3], p1[4], p1[5]])
+        s.sendArcMove([p1[0]+100, p1[1]+50, p1[2]-150, p1[3], p1[4], p1[5]], [p1[0], p1[1]-100, p1[2]-150, p1[3], p1[4], p1[5]])
