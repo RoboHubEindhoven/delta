@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from send_commands import Sender
+from arm_driver.srv import reset_errors
 import pygame
 import os
 import time
@@ -21,6 +22,7 @@ class PS4_Controller():
         
     def listen(self):
         try:
+            msg = reset_errors()
             while True:
                 events = pygame.event.get()
                 for event in events:
@@ -72,7 +74,7 @@ class PS4_Controller():
                             self.robot.jogRobot("RZ+")
                             print("Moving in RZ+ direction")
                         elif self.button_data.get(9) == True:
-                            self.robot.resetErrors()
+                            self.robot.resetErrors(msg)
                             self.button_data[9] = False
                             print("Resetting errors")
                         elif self.button_data.get(8) == True:
