@@ -360,14 +360,10 @@ class Sender():
             return True
         else:
             return False
-        
-class msg():
-    def __init__(self):
-        self.on = "false"
 
 if __name__ == "__main__":
     s = Sender()
-    m = msg()
+    m = reset_errors()
     m.on = "true"
     s.resetErrors(m)
     s.enableRobot()
