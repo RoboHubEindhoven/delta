@@ -57,7 +57,7 @@ class JointStatePublisher():
             j6_a = struct.unpack('i', struct.pack('HH', j6[0], j6[1]))[0]
             self.j6_angle = radians(j6_a/1000)
 
-            self.joint_states.position = [self.j1_angle, -self.j2_angle, self.j3_angle, -self.j4_angle, -self.j5_angle, -self.j6_angle]
+            self.joint_states.position = [self.j1_angle, self.j2_angle, -self.j3_angle, -self.j4_angle, -self.j5_angle, -self.j6_angle]
             self.joint_states.header.stamp = rospy.Time.now()
             self.p.publish(self.joint_states)
             #print(self.joint_states)
