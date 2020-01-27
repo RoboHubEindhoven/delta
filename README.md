@@ -32,6 +32,8 @@ To see the digital robot in Rviz run the following command
 rosrun rviz rviz
 ```
 This command opens rviz. In Rviz add the robot model and choose "base" as fixed frame. Now the robot model should be visable, and should be in the same position as the real robot.
+## Wiki
+To learn more about how the Delta DRV90L package works check out the [wiki](https://github.com/RemcoKuijpers/delta/wiki) (Work in progress)
 ## Authors
 
 * **Remco Kuijpers** - [RoboHub Eindhoven](https://github.com/RoboHubEindhoven)
