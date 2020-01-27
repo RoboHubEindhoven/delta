@@ -188,7 +188,7 @@ class Sender():
         if self.c.is_open():
             self.c.write_single_register(0x0300, 1405)
             print("Arm is homing...")
-            self.waitForEndMove()
+            #self.waitForEndMove()
 
     def writeDigitalOutput(self, output, state):
         """With this function it's possible to control the user digital outputs of the robot.
