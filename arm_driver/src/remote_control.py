@@ -5,6 +5,7 @@ from arm_driver.srv import reset_errors
 import pygame
 import os
 import time
+import serial
 
 class PS4_Controller():
     def __init__(self):
@@ -19,6 +20,8 @@ class PS4_Controller():
         self.axis_data = {}
         self.button_data = {}
         self.robot = Sender()
+        self.arduino = serial.Serial('/dev/ttyUSB0', 9600)
+        self.arduino.write(str(chr(150)))
         
     def listen(self):
         try:

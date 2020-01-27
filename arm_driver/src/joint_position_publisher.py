@@ -11,7 +11,8 @@ from pyModbusTCP.client import ModbusClient
 
 class JointStatePublisher():
     def __init__(self):
-            self.c = ModbusClient(host="192.168.1.1", auto_open=True, auto_close=False, port=502, debug=False, unit_id=2)
+            ip = rospy.get_param("/robot_ip")
+            self.c = ModbusClient(host=ip, auto_open=True, auto_close=False, port=502, debug=False, unit_id=2)
 
             rospy.init_node("joint_pos_pub")
             self.p = rospy.Publisher('/joint_states', JointState, queue_size=1)

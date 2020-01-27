@@ -16,10 +16,11 @@ class Sender():
     """
     def __init__(self):
         rospy.init_node("RobotArm")
+        ip = rospy.get_param("/robot_ip")
         self.resetService = rospy.Service('/reset_robot', reset_errors, self.resetErrors)
         self.powerService = rospy.Service('/power_robot', power, self.powerCallback)
         self.teachService = rospy.Service("/teach_position", teach_position, self.teachCurrentToolPose)
-        self.c = ModbusClient(host="192.168.1.1", auto_open=True, auto_close=False, port=502, debug=False, unit_id=2)
+        self.c = ModbusClient(host=ip, auto_open=True, auto_close=False, port=502, debug=False, unit_id=2)
         self.bits = 0
         self.name = getpass.getuser()
 
