@@ -12,19 +12,15 @@ class EndEffector():
 
     def startDispensing(self):
         self.sendCommand(2)
-        sleep(0.1)
 
     def stopDispensing(self):
         self.sendCommand(3)
-        sleep(0.1)
 
     def startBrushing(self):
         self.sendCommand(1)
-        sleep(0.1)
 
     def stopBrushing(self):
         self.sendCommand(0)
-        sleep(0.1)
 
 if __name__ == "__main__":
     EE = EndEffector()
