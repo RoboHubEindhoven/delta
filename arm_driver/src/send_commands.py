@@ -11,8 +11,8 @@ import getpass
 
 from arm_driver.srv import reset_errors, power, teach_position
 
-class Sender():
-    """The "Sender" class contains methods to control the robot.
+class DRV90L():
+    """The "DRV90L" class contains methods to control the robot.
     """
     def __init__(self):
         rospy.init_node("RobotArm")
@@ -363,7 +363,7 @@ class Sender():
             return False
 
 if __name__ == "__main__":
-    s = Sender()
+    s = DRV90L()
     p1 = s.getSavedToolPose("HomePos")
     m = reset_errors()
     m.on = "true"
