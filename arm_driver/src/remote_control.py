@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-from send_commands import Sender
+from send_commands import DRV90L
+from end_effector import EndEffector
 from arm_driver.srv import reset_errors
 import pygame
 import os
@@ -19,7 +20,8 @@ class PS4_Controller():
         self.controller.init()
         self.axis_data = {}
         self.button_data = {}
-        self.robot = Sender()
+        self.robot = DRV90L()
+        self.EE = EndEffector()
         
     def listen(self):
         try:
@@ -35,10 +37,7 @@ class PS4_Controller():
                         if event.type == pygame.JOYAXISMOTION:
                             self.axis_data[event.axis] = round(event.value,2)
 
-                        if not self.hasController():
-                            self.robot.jogRobot(None, stop=True)
-                            print("Reconnect PS4 controller...")
-                        elif self.axis_data.get(0) == -1.0:
+                        if self.axis_data.get(0) == -1.0:
                             self.robot.jogRobot("Y+")
                             print("Moving in Y+ direction")
                         elif self.axis_data.get(0) == 1.0:
@@ -90,6 +89,22 @@ class PS4_Controller():
                             self.robot.goHome()
                             self.button_data[10] = False
                             print("Homing robot")
+                        elif self.button_data.get(1) == True:
+                            self.EE.startDispensing()
+                            self.button_data[1] = False
+                            print("Started dispensing")
+                        elif self.button_data.get(3) == True:
+                            self.EE.stopDispensing()
+                            self.button_data[3] = False
+                            print("Stopped dispensing")
+                        elif self.button_data.get(11) == True:
+                            self.EE.startBrushing()
+                            self.button_data[11] = False
+                            print("Started brushing")
+                        elif self.button_data.get(12) == True:
+                            self.EE.stopBrushing()
+                            self.button_data[12] = False
+                            print("Stopped brushing")
                         else:
                             self.robot.jogRobot(None, stop=True)
                             #print("Jogging stopped")
@@ -99,14 +114,6 @@ class PS4_Controller():
         except KeyboardInterrupt:
             print("EXITING NOW")
             self.controller.quit()
-
-    def hasController(self):
-        now = time.time()
-        if now - self.lastActive > self.INACTIVITY_RECONNECT_TIME and now - self.lastTime > self.RECONNECT_TIMEOUT:
-            self.lastTime = now
-            pygame.joystick.quit()
-            pygame.joystick.init()
-        return pygame.joystick.get_count() > 0
 
 if __name__ == "__main__":
     ps4 = PS4_Controller()
