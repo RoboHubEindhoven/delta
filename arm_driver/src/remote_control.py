@@ -20,8 +20,6 @@ class PS4_Controller():
         self.axis_data = {}
         self.button_data = {}
         self.robot = Sender()
-        self.arduino = serial.Serial('/dev/ttyUSB0', 9600)
-        self.arduino.write(str(chr(150)))
         
     def listen(self):
         try:
