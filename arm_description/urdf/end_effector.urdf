@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="end_effector">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-2.7756E-17 6.2055E-05 0.0042602"
+        rpy="0 0 0" />
+      <mass
+        value="0.055591" />
+      <inertia
+        ixx="2.0351E-05"
+        ixy="-9.351E-23"
+        ixz="4.528E-21"
+        iyy="2.042E-05"
+        iyz="-1.9241E-08"
+        izz="3.875E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_description/meshes/EE_base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_description/meshes/EE_base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="ft300">
+    <inertial>
+      <origin
+        xyz="-0.00020759 -5.7584E-05 -0.015185"
+        rpy="0 0 0" />
+      <mass
+        value="0.089269" />
+      <inertia
+        ixx="4.3163E-05"
+        ixy="4.8654E-07"
+        ixz="2.9563E-07"
+        iyy="4.3423E-05"
+        iyz="4.3929E-07"
+        izz="7.4302E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_description/meshes/EE_ft300.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_description/meshes/EE_ft300.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint1"
+    type="fixed">
+    <origin
+      xyz="0 0 0.0545"
+      rpy="0 0 -1.5708" />
+    <parent
+      link="base_link" />
+    <child
+      link="ft300" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="brush">
+    <inertial>
+      <origin
+        xyz="0.00036726 -0.00078217 -0.14971"
+        rpy="0 0 0" />
+      <mass
+        value="0.79792" />
+      <inertia
+        ixx="0.00078208"
+        ixy="5.9791E-07"
+        ixz="1.6277E-07"
+        iyy="0.00077627"
+        iyz="6.9702E-07"
+        izz="0.00096011" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_description/meshes/EE_brush.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://arm_description/meshes/EE_brush.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint2"
+    type="fixed">
+    <origin
+      xyz="0 0 0.31372"
+      rpy="0 0 0" />
+    <parent
+      link="ft300" />
+    <child
+      link="brush" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>

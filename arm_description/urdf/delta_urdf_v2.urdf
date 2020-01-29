@@ -335,7 +335,7 @@
     name="wrist3"
     type="revolute">
     <origin
-      xyz="0 0.0330000000202569 0"
+      xyz="0.0330000000202569 0 0"
       rpy="1.5707963267949 0 1.5707963267949" />
     <parent
       link="wrist2_link" />
