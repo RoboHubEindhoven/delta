@@ -18,7 +18,7 @@ pip install pyModbusTCP
 ```
 Installing pygame
 ```
-pip3 install pygame
+pip install pygame
 ```
 ## Running the tests
 To test if the package is installed correctly, run the following commands
