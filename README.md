@@ -20,6 +20,11 @@ Installing pygame
 ```
 pip install pygame
 ```
+### Installing
+To install this package, navigate to your catkin_ws source folder ~/catkin_ws/src and run the following command:
+```
+git clone https://github.com/RemcoKuijpers/delta.git
+```
 ## Running the tests
 To test if the package is installed correctly, run the following commands
 ```
