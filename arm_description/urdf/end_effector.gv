@@ -1,0 +1,11 @@
+digraph G {
+node [shape=box];
+"base_link" [label="base_link"];
+"ft300" [label="ft300"];
+"brush" [label="brush"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"base_link" -> "joint1" [label="xyz: 0 0 0.0545 \nrpy: 0 0 -1.5708"]
+"joint1" -> "ft300"
+"ft300" -> "joint2" [label="xyz: 0 0 0.31372 \nrpy: 0 -0 0"]
+"joint2" -> "brush"
+}

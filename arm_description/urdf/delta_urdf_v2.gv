@@ -1,0 +1,26 @@
+digraph G {
+node [shape=box];
+"base_link" [label="base_link"];
+"base" [label="base"];
+"shoulder_link" [label="shoulder_link"];
+"elbow_link" [label="elbow_link"];
+"wrist1_link" [label="wrist1_link"];
+"wrist2_link" [label="wrist2_link"];
+"wrist3_link" [label="wrist3_link"];
+"wrist4_link" [label="wrist4_link"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"base_link" -> "dummy_joint" [label="xyz: 0 0 0 \nrpy: 0 -1.5708 1.5708"]
+"dummy_joint" -> "base"
+"base_link" -> "shoulder" [label="xyz: 0 -0.23 0 \nrpy: 0 1.5708 -1.5708"]
+"shoulder" -> "shoulder_link"
+"shoulder_link" -> "elbow" [label="xyz: -0.025 0.11756 0.14 \nrpy: 0 -0 1.5708"]
+"elbow" -> "elbow_link"
+"elbow_link" -> "wrist1" [label="xyz: -0.11756 0 0.44 \nrpy: 0 -1.5708 0"]
+"wrist1" -> "wrist1_link"
+"wrist1_link" -> "wrist2" [label="xyz: 0.04 0.435 0 \nrpy: 0 0 -1.5708"]
+"wrist2" -> "wrist2_link"
+"wrist2_link" -> "wrist3" [label="xyz: 0.033 0 0 \nrpy: 1.5708 -5.55112e-17 1.5708"]
+"wrist3" -> "wrist3_link"
+"wrist3_link" -> "wrist4" [label="xyz: 0 0 -0.0985 \nrpy: 0 -1.5708 1.4399"]
+"wrist4" -> "wrist4_link"
+}
