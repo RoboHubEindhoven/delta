@@ -10,6 +10,8 @@ class FT_Sensor():
     """This is the FT_Sensor class. This class is used for the FT300 sensor with ROS.
     """
     def __init__(self):
+        self.sensor = ModbusClient(method='rtu', port='/dev/ttyUSB0', baudrate=19200, timeout=1, stopbits=1)
+        self.sensor.connect()
         self.name = getpass.getuser()
         f = open('/home/%s/catkin_ws/src/delta/ft300_sensor/yaml/calibration.yaml' % self.name, 'r')
         self.d = yaml.load(f)
@@ -19,8 +21,6 @@ class FT_Sensor():
         rospy.init_node("forcetorque_publisher")
         self.data = Wrench()
         self.stamped_data = WrenchStamped()
-        self.sensor = ModbusClient(method='rtu', port='/dev/ttyUSB0', baudrate=19200, timeout=1, stopbits=1)
-        self.sensor.connect()
 
     def pubVals(self):
         """This function publishes the force and torque values measured by the forcetorque sensor to the /ft_data and /stamped_ft_data topics.
