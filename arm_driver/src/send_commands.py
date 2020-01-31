@@ -110,6 +110,12 @@ class DRV90L():
             self.waitForEndMove([x,y,z,rx,ry,rz])
 
     def sendArcMove(self, p1, p2):
+        """With this function it's possible to do a arc move. The arm will move to p2 through p1.
+        
+        Arguments:
+            p1 {list} -- 1st position [x,y,z,rx,ry,rz]
+            p2 {list} -- 2nd position [x,y,z,rx,ry,rz]
+        """
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
@@ -145,6 +151,14 @@ class DRV90L():
             self.waitForEndMove(p2)
 
     def jogRobot(self, direction, stop=False):
+        """With this function it's possible to jog the robot in a certain direction.
+        
+        Arguments:
+            direction {string} -- "X+", "Y+", "Z+", "RX+", "RY+", "RZ+", "X-", "Y-", "Z-", "RX-", "RY-", "RZ-"
+        
+        Keyword Arguments:
+            stop {bool} -- if True the robot will stop jogging (default: {False})
+        """
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
@@ -245,6 +259,11 @@ class DRV90L():
             return do
 
     def getToolPosition(self):
+        """With this function it's possible to get the tool position.
+        
+        Returns:
+            [list] -- [x,y,z,rx,ry,rz] in mm / degrees
+        """
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
@@ -265,6 +284,11 @@ class DRV90L():
             return [x,y,z,rx,ry,rz]
 
     def getJointPositions(self):
+        """With this function it's possible to get the joint positions
+        
+        Returns:
+            [list] -- [1, 2, 3, 4, 5, 6] joint angles in radians
+        """
         if not self.c.is_open():
             if not self.c.open():
                 print("Unable to connect\nTrying to connect...")
@@ -291,6 +315,15 @@ class DRV90L():
             return [j1_angle, j2_angle, j3_angle, j4_angle, j5_angle, j6_angle]
 
     def saveToolPose(self, name, pose):
+        """With this function it's possible to save a position to the poses.yaml yaml file.
+        
+        Arguments:
+            name {string} -- Position name
+            pose {[type]} -- [x,y,z,rx,ry,rz] position in mm / degrees
+        
+        Returns:
+            [type] -- [description]
+        """
         f = open('/home/%s/catkin_ws/src/delta/arm_driver/yaml/poses.yaml' % self.name, 'r')
         d = yaml.load(f)
         try:
@@ -309,9 +342,25 @@ class DRV90L():
         return True
 
     def teachCurrentToolPose(self, msg):
+        """With this function it's possible to save the current robot position to the poses.yaml yaml file.
+        
+        Arguments:
+            msg {teach_position.srv} -- Name = position name
+        
+        Returns:
+            [bool] -- True if succesfull
+        """
         return self.saveToolPose(msg.name, self.getToolPosition())
 
     def getSavedToolPose(self, name):
+        """Load a position from the poses.yaml yaml file.
+        
+        Arguments:
+            name {string} -- Position name to load
+        
+        Returns:
+            [list] -- [x,y,z,rx,ry,rz] position in mm /degrees
+        """
         f = open('/home/%s/catkin_ws/src/delta/arm_driver/yaml/poses.yaml' % self.name, 'r')
         d = yaml.load(f)
         f.close()
