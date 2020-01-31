@@ -8,7 +8,7 @@ float encoder_speed()
   oldposition = newposition;
   oldtime = newtime;
   delay(100);
-  velocity = vel * 3 / 475;
+  velocity = vel * 1 / 500;
   return velocity;
 }
 
@@ -36,6 +36,7 @@ float speed_PID(int speed_in) {
   
   float Speed = encoder_speed();
   motor_value = velocity_pid.compute(speed_in);// Let the PID compute the value, returns the optimal output
+  
   if (motor_value > 0) {
     MotorCounterClockwise(motor_value);
   }

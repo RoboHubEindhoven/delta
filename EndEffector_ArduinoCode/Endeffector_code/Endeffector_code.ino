@@ -1,7 +1,7 @@
 #include <PIDController.h>
 
 #define encoder0PinA  2
-#define encoder0PinB  3
+#define encoder0PinB  4
 PIDController velocity_pid; // Create an instance of the PID controller class, called "pid"
 
 unsigned int integerValue = 0; // Max value is 65535
@@ -30,7 +30,7 @@ void setup() {
 
   Serial.println("start");                // a personal quirk
   pinMode(9, OUTPUT); //Direction
-  pinMode(10, OUTPUT); // PWM
+  pinMode(11, OUTPUT); // PWM
 
   velocity_pid.begin();//initialize the PID instance
   velocity_pid.tune(7, 0.1, 100); // Tune the PID, arguments: kP, kI, kD
@@ -41,6 +41,7 @@ void loop() {
   if (Serial.available() > 0)
   {
     data = Serial.read();
+    Serial.println(data);
 
     switch (data)  {
       case '0':
@@ -48,7 +49,7 @@ void loop() {
         break;
 
       case '1' :
-        val = 200;
+        val = 50;
         break ;
 
       case '2' :
@@ -63,5 +64,6 @@ void loop() {
         break ;
     }
   }
-  speed_PID(val);
+  //speed_PID(100);
+  analogWrite(11, val);
 }
