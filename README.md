@@ -61,7 +61,7 @@ ping 192.168.1.1
 To learn more about how the Delta DRV90L package works check out the [wiki](https://github.com/RemcoKuijpers/delta/wiki) (Work in progress)
 
 ## Report
-To see the robot arm's part of the project's end report see the following [pfd file](https://github.com/RemcoKuijpers/delta/blob/master/docs/RobotArm_EndReport.pdf).
+To see the robot arm's part of the project's end report see the following [pdf file](https://github.com/RemcoKuijpers/delta/blob/master/docs/RobotArm_EndReport.pdf).
 
 ## Authors
 
