@@ -36,18 +36,3 @@ class EndEffector():
         """Function to stop rotating the brush.
         """
         self.sendCommand(0)
-
-if __name__ == "__main__":
-    EE = EndEffector()
-    #while True:
-    #    EE.startBrushing()
-    #    print("Start brushing")
-    #    sleep(1)
-    #    EE.startDispensing()
-    #    print("Start dispensing")
-    #    sleep(5)
-    #    EE.stopBrushing()
-    #    EE.stopDispensing()
-    #    print("Stop brushing")
-    #    print("Stop dispensing")
-    #    sleep(1)
