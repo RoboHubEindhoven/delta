@@ -39,6 +39,11 @@ roslaunch arm_description display_with_EE.launch gui:=true
 ```
 ![Alt Text](https://github.com/RemcoKuijpers/delta/blob/master/pics/display_with_control_compressed.gif)
 
+To run the code for the force torque sensor run the following command
+```
+rosrun ft300_sensor ft300.py
+```
+
 ## Wiki
 To learn more about how the Delta DRV90L package works check out the [wiki](https://github.com/RemcoKuijpers/delta/wiki) (Work in progress)
 ## Authors
