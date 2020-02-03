@@ -26,6 +26,10 @@ To install this package, navigate to your catkin_ws source folder ~/catkin_ws/sr
 ```
 git clone https://github.com/RemcoKuijpers/delta.git
 ```
+After git cloning the package a catkin_make is required in the ~/catkin_ws folder.
+```
+catkin_make
+```
 ## Running the tests
 To test if the package is installed correctly, run the following commands
 ```
