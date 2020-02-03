@@ -1,0 +1,155 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module DRV90L</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>DRV90L</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/remco/catkin_ws/src/delta/arm_driver/src/DRV90L.py">/home/remco/catkin_ws/src/delta/arm_driver/src/DRV90L.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="getpass.html">getpass</a><br>
+<a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="rospy.html">rospy</a><br>
+<a href="struct.html">struct</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+<a href="yaml.html">yaml</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="DRV90L.html#DRV90L">DRV90L</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="DRV90L">class <strong>DRV90L</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>The&nbsp;"<a href="#DRV90L">DRV90L</a>"&nbsp;class&nbsp;contains&nbsp;methods&nbsp;to&nbsp;control&nbsp;the&nbsp;robot.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="DRV90L-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="DRV90L-disableRobot"><strong>disableRobot</strong></a>(self)</dt><dd><tt>This&nbsp;function&nbsp;disables&nbsp;the&nbsp;robot.&nbsp;After&nbsp;this&nbsp;function&nbsp;is&nbsp;called,&nbsp;the&nbsp;robot&nbsp;can't&nbsp;move.&nbsp;The&nbsp;motors&nbsp;aren't&nbsp;powered&nbsp;anymore.</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-enableRobot"><strong>enableRobot</strong></a>(self)</dt><dd><tt>This&nbsp;function&nbsp;enables&nbsp;the&nbsp;robot.&nbsp;After&nbsp;this&nbsp;function&nbsp;is&nbsp;called,&nbsp;the&nbsp;robot&nbsp;is&nbsp;ready&nbsp;to&nbsp;move.<br>
+!!!Be&nbsp;aware&nbsp;the&nbsp;motors&nbsp;get&nbsp;enabled&nbsp;after&nbsp;calling&nbsp;this&nbsp;function!!!</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-getJointPositions"><strong>getJointPositions</strong></a>(self)</dt><dd><tt>With&nbsp;this&nbsp;function&nbsp;it's&nbsp;possible&nbsp;to&nbsp;get&nbsp;the&nbsp;joint&nbsp;positions<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[list]&nbsp;--&nbsp;[1,&nbsp;2,&nbsp;3,&nbsp;4,&nbsp;5,&nbsp;6]&nbsp;joint&nbsp;angles&nbsp;in&nbsp;radians</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-getSavedToolPose"><strong>getSavedToolPose</strong></a>(self, name)</dt><dd><tt>Load&nbsp;a&nbsp;position&nbsp;from&nbsp;the&nbsp;poses.yaml&nbsp;yaml&nbsp;file.<br>
+&nbsp;<br>
+Arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;{string}&nbsp;--&nbsp;Position&nbsp;name&nbsp;to&nbsp;load<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[list]&nbsp;--&nbsp;[x,y,z,rx,ry,rz]&nbsp;position&nbsp;in&nbsp;mm&nbsp;/degrees</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-getToolPosition"><strong>getToolPosition</strong></a>(self)</dt><dd><tt>With&nbsp;this&nbsp;function&nbsp;it's&nbsp;possible&nbsp;to&nbsp;get&nbsp;the&nbsp;tool&nbsp;position.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[list]&nbsp;--&nbsp;[x,y,z,rx,ry,rz]&nbsp;in&nbsp;mm&nbsp;/&nbsp;degrees</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-getUserDigitalInputs"><strong>getUserDigitalInputs</strong></a>(self)</dt><dd><tt>With&nbsp;this&nbsp;function&nbsp;it's&nbsp;possible&nbsp;to&nbsp;get&nbsp;the&nbsp;states&nbsp;of&nbsp;all&nbsp;user&nbsp;digital&nbsp;inputs.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[list]&nbsp;--&nbsp;[Containing&nbsp;all&nbsp;states&nbsp;of&nbsp;the&nbsp;digital&nbsp;inputs&nbsp;[0&nbsp;or&nbsp;1]]</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-getUserDigitalOutputs"><strong>getUserDigitalOutputs</strong></a>(self)</dt><dd><tt>With&nbsp;this&nbsp;function&nbsp;it's&nbsp;possible&nbsp;to&nbsp;get&nbsp;the&nbsp;states&nbsp;of&nbsp;all&nbsp;user&nbsp;digital&nbsp;outputs.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[list]&nbsp;--&nbsp;[Containing&nbsp;all&nbsp;states&nbsp;of&nbsp;the&nbsp;digital&nbsp;outputs&nbsp;[0&nbsp;or&nbsp;1]]</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-goHome"><strong>goHome</strong></a>(self)</dt><dd><tt>This&nbsp;function&nbsp;moves&nbsp;the&nbsp;robot&nbsp;to&nbsp;the&nbsp;home&nbsp;position&nbsp;that&nbsp;is&nbsp;set&nbsp;in&nbsp;the&nbsp;robot&nbsp;software.<br>
+!!!The&nbsp;robot&nbsp;needs&nbsp;to&nbsp;be&nbsp;enables&nbsp;for&nbsp;this&nbsp;function&nbsp;to&nbsp;work!!!</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-jogRobot"><strong>jogRobot</strong></a>(self, direction, stop<font color="#909090">=False</font>)</dt><dd><tt>With&nbsp;this&nbsp;function&nbsp;it's&nbsp;possible&nbsp;to&nbsp;jog&nbsp;the&nbsp;robot&nbsp;in&nbsp;a&nbsp;certain&nbsp;direction.<br>
+&nbsp;<br>
+Arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;direction&nbsp;{string}&nbsp;--&nbsp;"X+",&nbsp;"Y+",&nbsp;"Z+",&nbsp;"RX+",&nbsp;"RY+",&nbsp;"RZ+",&nbsp;"X-",&nbsp;"Y-",&nbsp;"Z-",&nbsp;"RX-",&nbsp;"RY-",&nbsp;"RZ-"<br>
+&nbsp;<br>
+Keyword&nbsp;Arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;stop&nbsp;{bool}&nbsp;--&nbsp;if&nbsp;True&nbsp;the&nbsp;robot&nbsp;will&nbsp;stop&nbsp;jogging&nbsp;(default:&nbsp;{False})</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-powerCallback"><strong>powerCallback</strong></a>(self, msg)</dt></dl>
+
+<dl><dt><a name="DRV90L-resetErrors"><strong>resetErrors</strong></a>(self, msg)</dt><dd><tt>With&nbsp;this&nbsp;function&nbsp;it's&nbsp;possible&nbsp;to&nbsp;reset&nbsp;all&nbsp;errors.<br>
+!!!ONLY&nbsp;USE&nbsp;THIS&nbsp;FUNCTION&nbsp;WHEN&nbsp;IT'S&nbsp;SAFE!!!</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-resetUserDigitalOutputs"><strong>resetUserDigitalOutputs</strong></a>(self)</dt><dd><tt>With&nbsp;this&nbsp;function&nbsp;it's&nbsp;possible&nbsp;to&nbsp;reset&nbsp;all&nbsp;user&nbsp;digital&nbsp;outputs&nbsp;to&nbsp;0.</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-saveToolPose"><strong>saveToolPose</strong></a>(self, name, pose)</dt><dd><tt>With&nbsp;this&nbsp;function&nbsp;it's&nbsp;possible&nbsp;to&nbsp;save&nbsp;a&nbsp;position&nbsp;to&nbsp;the&nbsp;poses.yaml&nbsp;yaml&nbsp;file.<br>
+&nbsp;<br>
+Arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;{string}&nbsp;--&nbsp;Position&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pose&nbsp;{[type]}&nbsp;--&nbsp;[x,y,z,rx,ry,rz]&nbsp;position&nbsp;in&nbsp;mm&nbsp;/&nbsp;degrees<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[type]&nbsp;--&nbsp;[description]</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-sendArcMove"><strong>sendArcMove</strong></a>(self, p1, p2)</dt><dd><tt>With&nbsp;this&nbsp;function&nbsp;it's&nbsp;possible&nbsp;to&nbsp;do&nbsp;a&nbsp;arc&nbsp;move.&nbsp;The&nbsp;arm&nbsp;will&nbsp;move&nbsp;to&nbsp;p2&nbsp;through&nbsp;p1.<br>
+&nbsp;<br>
+Arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;p1&nbsp;{list}&nbsp;--&nbsp;1st&nbsp;position&nbsp;[x,y,z,rx,ry,rz]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;p2&nbsp;{list}&nbsp;--&nbsp;2nd&nbsp;position&nbsp;[x,y,z,rx,ry,rz]</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-sendPositionMove"><strong>sendPositionMove</strong></a>(self, x, y, z, rx, ry, rz, speed, frame)</dt><dd><tt>This&nbsp;function&nbsp;is&nbsp;used&nbsp;to&nbsp;move&nbsp;the&nbsp;end&nbsp;effector&nbsp;of&nbsp;the&nbsp;robot&nbsp;to&nbsp;a&nbsp;certain&nbsp;position.<br>
+!!!The&nbsp;robot&nbsp;needs&nbsp;to&nbsp;be&nbsp;enables&nbsp;for&nbsp;this&nbsp;function&nbsp;to&nbsp;work!!!<br>
+&nbsp;<br>
+Arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;{int}&nbsp;--&nbsp;[x&nbsp;position&nbsp;in&nbsp;mm]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;{int}&nbsp;--&nbsp;[y&nbsp;position&nbsp;in&nbsp;mm]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;z&nbsp;{int}&nbsp;--&nbsp;[z&nbsp;position&nbsp;in&nbsp;mm]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rx&nbsp;{int}&nbsp;--&nbsp;[rotation&nbsp;around&nbsp;x&nbsp;axis&nbsp;in&nbsp;degrees]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;ry&nbsp;{int}&nbsp;--&nbsp;[rotation&nbsp;around&nbsp;y&nbsp;axis&nbsp;in&nbsp;degrees]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rz&nbsp;{int}&nbsp;--&nbsp;[rotation&nbsp;around&nbsp;z&nbsp;axis&nbsp;in&nbsp;degrees]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;speed&nbsp;{int}&nbsp;--&nbsp;[speed&nbsp;in&nbsp;%&nbsp;[0&nbsp;to&nbsp;100]]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;frame&nbsp;{string}&nbsp;--&nbsp;[Reference&nbsp;frame&nbsp;(world&nbsp;is&nbsp;base&nbsp;of&nbsp;robot)]</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-teachCurrentToolPose"><strong>teachCurrentToolPose</strong></a>(self, msg)</dt><dd><tt>With&nbsp;this&nbsp;function&nbsp;it's&nbsp;possible&nbsp;to&nbsp;save&nbsp;the&nbsp;current&nbsp;robot&nbsp;position&nbsp;to&nbsp;the&nbsp;poses.yaml&nbsp;yaml&nbsp;file.<br>
+&nbsp;<br>
+Arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;msg&nbsp;{teach_position.srv}&nbsp;--&nbsp;Name&nbsp;=&nbsp;position&nbsp;name<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[bool]&nbsp;--&nbsp;True&nbsp;if&nbsp;succesfull</tt></dd></dl>
+
+<dl><dt><a name="DRV90L-waitForEndMove"><strong>waitForEndMove</strong></a>(self, pos)</dt></dl>
+
+<dl><dt><a name="DRV90L-writeDigitalOutput"><strong>writeDigitalOutput</strong></a>(self, output, state)</dt><dd><tt>With&nbsp;this&nbsp;function&nbsp;it's&nbsp;possible&nbsp;to&nbsp;control&nbsp;the&nbsp;user&nbsp;digital&nbsp;outputs&nbsp;of&nbsp;the&nbsp;robot.<br>
+&nbsp;<br>
+Arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;output&nbsp;{int}&nbsp;--&nbsp;[The&nbsp;user&nbsp;digital&nbsp;output&nbsp;number&nbsp;that&nbsp;needs&nbsp;to&nbsp;be&nbsp;used&nbsp;[1&nbsp;to&nbsp;12]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;state&nbsp;{boolean}&nbsp;--&nbsp;[The&nbsp;state&nbsp;that&nbsp;the&nbsp;output&nbsp;needs&nbsp;to&nbsp;be&nbsp;[True=HIGH&nbsp;(24V),&nbsp;False=LOW&nbsp;(0V)]]</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-radians"><strong>radians</strong></a>(...)</dt><dd><tt><a href="#-radians">radians</a>(x)<br>
+&nbsp;<br>
+Convert&nbsp;angle&nbsp;x&nbsp;from&nbsp;degrees&nbsp;to&nbsp;radians.</tt></dd></dl>
+</td></tr></table>
+</body></html>
