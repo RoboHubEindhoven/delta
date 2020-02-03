@@ -3,6 +3,7 @@ This is a ROS package for the DRV90L robotic arm of Delta Electronics. This pack
 * ROS robot model (URDF) for visualising robot in Rviz.
 * Code for autonomously and remote controlling the robot without using the DRAStudio software.
 * Code for using the Robotiq FT300 force torque sensor in combination with the robot.
+![Alt Text](https://github.com/RemcoKuijpers/delta/blob/master/pics/Result.gif)
 
 ## Getting started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
