@@ -49,6 +49,7 @@ To connect to the real robot make sure that your machine is on the same network 
 nmap -sP 192.168.1.*
 ```
 Make sure to choose a ip adress that's not in the list.
+
 **Sometimes the connection to the robot won't work. This can be solved by disabling all other connections (turn of wifi).**
 
 To test the connection to the robot run the following command
