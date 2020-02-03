@@ -44,12 +44,17 @@ To run the code for the force torque sensor run the following command
 rosrun ft300_sensor ft300.py
 ```
 ## Connecting to the real robot
-To connect to the real robot make sure that your machine is on the same network as the robot. This can be with a ethernet cable, or wireless when the robot is connected to a router. To connect to the robot you'll need to setup a static ip adress, you can use anything from 192.168.1.2 to 192.168.1.99 depending on the ip adress of the other devices on the network. To chech which ip adresses are already used run the following command
+To connect to the real robot make sure that your machine is on the same network as the robot. This can be with a ethernet cable, or wireless when the robot is connected to a router. To connect to the robot you'll need to setup a static ip adress, you can use anything from 192.168.1.2 to 192.168.1.99 depending on the ip addres of the other devices on the network. To chech which ip adresses are already used run the following command (the ip addres of the robot is 192.168.1.1
 ```
 nmap -sP 192.168.1.*
 ```
 Make sure to choose a ip adress that's not in the list.
-**Sometimes the connection to the robot won't work. This can be solved by disabling all other connections (turn of wifi).
+**Sometimes the connection to the robot won't work. This can be solved by disabling all other connections (turn of wifi).**
+
+To test the connection to the robot run the following command
+```
+ping 192.168.1.1
+```
 
 ## Wiki
 To learn more about how the Delta DRV90L package works check out the [wiki](https://github.com/RemcoKuijpers/delta/wiki) (Work in progress)
