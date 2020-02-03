@@ -1,0 +1,67 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module ft300</title>
+<meta charset="utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>ft300</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/remco/catkin_ws/src/delta/ft300_sensor/src/ft300.py">/home/remco/catkin_ws/src/delta/ft300_sensor/src/ft300.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="getpass.html">getpass</a><br>
+</td><td width="25%" valign=top><a href="rospy.html">rospy</a><br>
+</td><td width="25%" valign=top><a href="yaml.html">yaml</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="ft300.html#FT_Sensor">FT_Sensor</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="FT_Sensor">class <strong>FT_Sensor</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>This&nbsp;is&nbsp;the&nbsp;<a href="#FT_Sensor">FT_Sensor</a>&nbsp;class.&nbsp;This&nbsp;class&nbsp;is&nbsp;used&nbsp;for&nbsp;the&nbsp;FT300&nbsp;sensor&nbsp;with&nbsp;ROS.<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="FT_Sensor-__init__"><strong>__init__</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="FT_Sensor-calibrate"><strong>calibrate</strong></a>(self)</dt><dd><tt>This&nbsp;function&nbsp;is&nbsp;used&nbsp;to&nbsp;set&nbsp;the&nbsp;0&nbsp;values&nbsp;of&nbsp;the&nbsp;sensor.&nbsp;When&nbsp;this&nbsp;function&nbsp;is&nbsp;called&nbsp;the&nbsp;current&nbsp;force&nbsp;torque&nbsp;values&nbsp;will&nbsp;be&nbsp;set&nbsp;as&nbsp;0.</tt></dd></dl>
+
+<dl><dt><a name="FT_Sensor-pubVals"><strong>pubVals</strong></a>(self)</dt><dd><tt>This&nbsp;function&nbsp;publishes&nbsp;the&nbsp;force&nbsp;and&nbsp;torque&nbsp;values&nbsp;measured&nbsp;by&nbsp;the&nbsp;forcetorque&nbsp;sensor&nbsp;to&nbsp;the&nbsp;/ft_data&nbsp;and&nbsp;/stamped_ft_data&nbsp;topics.<br>
+The&nbsp;published&nbsp;messages&nbsp;are&nbsp;Wrench&nbsp;and&nbsp;WrenchStamped.</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-twos_comp"><strong>twos_comp</strong></a>(val, bits)</dt><dd><tt>This&nbsp;function&nbsp;is&nbsp;used&nbsp;to&nbsp;calculate&nbsp;the&nbsp;twos&nbsp;complement&nbsp;of&nbsp;a&nbsp;value.<br>
+&nbsp;<br>
+Arguments:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;{int}&nbsp;--&nbsp;input&nbsp;value&nbsp;to&nbsp;calculate&nbsp;the&nbsp;twos&nbsp;complement&nbsp;from.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bits&nbsp;{int}&nbsp;--&nbsp;The&nbsp;amount&nbsp;of&nbsp;bits&nbsp;for&nbsp;the&nbsp;twos&nbsp;complement&nbsp;calculation.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[int]&nbsp;--&nbsp;The&nbsp;twos&nbsp;complement&nbsp;of&nbsp;the&nbsp;input&nbsp;value.</tt></dd></dl>
+</td></tr></table>
+</body></html>
