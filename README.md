@@ -31,18 +31,14 @@ To test if the package is installed correctly, run the following commands
 ```
 roslaunch arm_description real_with_EE.launch
 ```
-This command will launch the Rviz visualisation of the real robot. 
+This command will launch the Rviz visualisation of the real robot. In Rviz add the robot model and choose "base" as fixed frame. Now the robot model should be visable, and should be in the same position as the real robot.
 
-With the following command the robot model gets displayed, without connecting to the real robot. It's also possible to add the gui:=true option. In this way the robot angles can be controlled with the following command the robot model is displayed which can be controlled
+With the following command the robot model gets displayed, without connecting to the real robot. It's also possible to add the gui:=true option. In this way the robot angles can be controlled with the following command the robot model is displayed which can be controlled. To see the displayed robot in Rviz run the following command
 ```
-roslaunch arm_description display_with_EE.launch
+roslaunch arm_description display_with_EE.launch gui:=true
 ```
 ![Alt Text](https://github.com/RemcoKuijpers/delta/blob/master/pics/display_with_control_compressed.gif)
-To see the digital robot in Rviz run the following command
-```
-rosrun rviz rviz
-```
-This command opens rviz. In Rviz add the robot model and choose "base" as fixed frame. Now the robot model should be visable, and should be in the same position as the real robot.
+
 ## Wiki
 To learn more about how the Delta DRV90L package works check out the [wiki](https://github.com/RemcoKuijpers/delta/wiki) (Work in progress)
 ## Authors
