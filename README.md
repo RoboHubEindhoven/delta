@@ -33,6 +33,11 @@ roslaunch arm_description real_with_EE.launch
 ```
 This command will launch the Rviz visualisation of the real robot. 
 
+With the following command the robot model gets displayed, without connecting to the real robot. It's also possible to add the gui:=true option. In this way the robot angles can be controlled with the following command the robot model is displayed which can be controlled
+```
+roslaunch arm_description display_with_EE.launch
+```
+![Alt Text](https://github.com/RemcoKuijpers/delta/blob/master/pics/display_with_control_compressed.gif)
 To see the digital robot in Rviz run the following command
 ```
 rosrun rviz rviz
