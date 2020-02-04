@@ -29,8 +29,8 @@ void setup() {
   attachInterrupt(0, doEncoder, RISING);  // encoDER ON PIN 2
 
   Serial.println("start");                // a personal quirk
-  pinMode(9, OUTPUT); //Direction
-  pinMode(11, OUTPUT); // PWM
+  pinMode(10, OUTPUT); //Direction
+  pinMode(9, OUTPUT); // PWM
 
   velocity_pid.begin();//initialize the PID instance
   velocity_pid.tune(7, 0.1, 100); // Tune the PID, arguments: kP, kI, kD
@@ -49,7 +49,7 @@ void loop() {
         break;
 
       case '1' :
-        val = 50;
+        val = 10;
         break ;
 
       case '2' :
@@ -65,5 +65,5 @@ void loop() {
     }
   }
   //speed_PID(100);
-  analogWrite(11, val);
+  analogWrite(9, val);
 }

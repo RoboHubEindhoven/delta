@@ -2,6 +2,7 @@
 
 import rospy
 import yaml
+import time
 import getpass
 from geometry_msgs.msg import Wrench, WrenchStamped
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient
@@ -74,3 +75,4 @@ if __name__ == "__main__":
     s.calibrate()
     while not rospy.is_shutdown():
         s.pubVals()
+        time.sleep(0.1)

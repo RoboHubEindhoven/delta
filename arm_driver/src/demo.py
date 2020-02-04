@@ -8,6 +8,7 @@ from end_effector import EndEffector
 if __name__ == "__main__":
     s = DRV90L()
     e = EndEffector()
+    #rospy.spin()
     Home = s.getSavedToolPose("Home")
     p1 = s.getSavedToolPose("p1")
     p2 = s.getSavedToolPose("p2")
