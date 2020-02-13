@@ -64,6 +64,8 @@ ping 192.168.1.119
 ## Wiki
 To learn more about how the Delta DRV90L/DRV70E package works check out the [wiki](https://github.com/RemcoKuijpers/delta/wiki) (Work in progress)
 
+DRV70E in progress.
+
 ## Report
 To see the robot arm's part of the project's end report see the following [pdf file](https://github.com/RemcoKuijpers/delta/blob/master/docs/RobotArm_EndReport.pdf).
 
