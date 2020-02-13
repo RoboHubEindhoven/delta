@@ -411,3 +411,11 @@ class DRV90L():
             return True
         else:
             return False
+
+if __name__ == "__main__":
+    Robot = DRV90L()
+    while not rospy.is_shutdown():
+        Robot.sendPositionMove(252, 0, 776, -178, -90, -3, 100, "world")
+        time.sleep(2)
+        Robot.sendPositionMove(251, 0, 717, -178, -90, -3, 100, "world")
+        time.sleep(2)

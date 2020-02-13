@@ -75,4 +75,3 @@ if __name__ == "__main__":
     s.calibrate()
     while not rospy.is_shutdown():
         s.pubVals()
-        time.sleep(0.1)

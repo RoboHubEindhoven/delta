@@ -1,5 +1,5 @@
 <launch>
-  <param name="robot_ip" type="str" value="192.168.1.1"/>
+  <param name="robot_ip" type="str" value="192.168.1.119"/>
   <arg
     name="model" />
   <arg
