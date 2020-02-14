@@ -3,7 +3,7 @@ This is a ROS package for the DRV90L/DRV70E robotic arm of Delta Electronics. Th
 * ROS package for controlling and visualizing the robot.
 * Code for autonomously and remote controlling the robot without using the DRAStudio software.
 * Code for using the Robotiq FT300 force torque sensor using ROS.
-![Alt Text](https://github.com/RemcoKuijpers/delta/blob/master/pics/Result.gif)
+![Alt Text](https://github.com/RoboHubEindhoven/delta/blob/master/delta_manipulation/pics/Result.gif)
 
 ## Getting started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -41,7 +41,7 @@ With the following command the robot model gets displayed, without connecting to
 ```
 roslaunch arm_description display_with_EE.launch gui:=true
 ```
-![Alt Text](https://github.com/RemcoKuijpers/delta/blob/master/pics/display_with_control_compressed.gif)
+![Alt Text](https://github.com/RoboHubEindhoven/delta/blob/master/delta_manipulation/pics/display_with_control_compressed.gif)
 
 To run the code for the force torque sensor run the following command
 ```
@@ -62,13 +62,13 @@ ping 192.168.1.119
 ```
 
 ## Wiki
-To learn more about how the Delta DRV90L/DRV70E package works check out the [wiki](https://github.com/RemcoKuijpers/delta/wiki) (Work in progress)
+To learn more about how the Delta DRV90L/DRV70E package works check out the [wiki](https://github.com/RoboHubEindhoven/delta/wiki) (Work in progress)
 
 DRV70E in progress.
 
 ## Report
-To see the robot arm's part of the project's end report see the following [pdf file](https://github.com/RemcoKuijpers/delta/blob/master/docs/RobotArm_EndReport.pdf).
+To see the robot arm's part of the project's end report see the following [pdf file](https://github.com/RoboHubEindhoven/delta/blob/master/delta_manipulation/docs/RobotArm_EndReport.pdf).
 
 ## Authors
 
-* **Remco Kuijpers** - [RoboHub Eindhoven](https://github.com/RoboHubEindhoven)
+* **Remco Kuijpers** - [RoboHub Eindhoven](https://github.com/RoboHubEindhove
